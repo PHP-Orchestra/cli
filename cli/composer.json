@@ -1,0 +1,21 @@
+{
+    "name": "php-orchestra/cli",
+    "description": "CLI tool for PHP projects orchestration",
+    "type": "application",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "PhpOrchestra\\Cli\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Rúdi Rocha",
+            "email": "rudi.rocha@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "symfony/console": "6.2.x-dev"
+    }
+}
