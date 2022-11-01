@@ -2,7 +2,7 @@
 
 namespace PhpOrchestra\Cli\Commands\Solution;
 
-use PhpOrchestra\Application\Commands\GenerateSolutionCommand;
+use PhpOrchestra\Application\Commands\OrchestraCommandInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -15,8 +15,15 @@ use Symfony\Component\Console\Output\OutputInterface;
     )]
 class InitializeCommand extends Command
 {
-
+    private readonly OrchestraCommandInterface $generateSolutionCommand;
     protected static $defaultDescription = 'Initialize a new Solution file.';
+
+    public function __construct(OrchestraCommandInterface $generateSolutionCommand)
+    {
+        parent::__construct();
+        
+        $this->generateSolutionCommand = $generateSolutionCommand;
+    }
 
     protected function configure(): void
     {
@@ -34,9 +41,8 @@ class InitializeCommand extends Command
         $workingDir = $input->getArgument('working-dir');
 
         try {
-            $generateSolutionCommand = new GenerateSolutionCommand();
-            $generateSolutionCommand
-                ->setWorkingDirectory($workingDir)
+            $this->generateSolutionCommand
+                //->setWorkingDirectory($workingDir)
                 ->execute();
             $output->writeln(sprintf('<info>Orchestra solution file created at: %s</info>', $workingDir));
         } catch (\Exception $ex) {

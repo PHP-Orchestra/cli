@@ -4,7 +4,7 @@ namespace PhpOrchestra\Application\Commands;
 
 use PhpOrchestra\Application\Services\SolutionServiceInterface;
 
-class GenerateSolutionCommand extends AbstractCommand implements CommandInterface
+class GenerateSolutionCommand extends AbstractCommand implements OrchestraCommandInterface
 {
     private readonly SolutionServiceInterface $solutionService;
 

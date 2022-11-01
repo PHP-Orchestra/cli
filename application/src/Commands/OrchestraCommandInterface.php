@@ -2,7 +2,7 @@
 
 namespace PhpOrchestra\Application\Commands;
 
-interface CommandInterface
+interface OrchestraCommandInterface
 {
     public function execute(): void;
 }

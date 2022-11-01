@@ -1,0 +1,25 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+    _instanceof:
+        Symfony\Component\Console\Command\Command:
+            tags: ['command']
+    
+    PhpOrchestra\Cli\:
+        resource: '../src/'
+    PhpOrchestra\Cli\Application: 
+        arguments:
+            - !tagged command
+    
+    PhpOrchestra\Cli\Commands\Solution\InitializeCommand:
+        arguments: 
+            - '@PhpOrchestra\Application\Commands\GenerateSolutionCommand'
+
+    PhpOrchestra\Application\Commands\GenerateSolutionCommand: ~
+    PhpOrchestra\Application\Services\SolutionService: ~
+    PhpOrchestra\Application\Services\SolutionServiceInterface: '@PhpOrchestra\Application\Services\SolutionService'
+
+
+        

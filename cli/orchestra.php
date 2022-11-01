@@ -1,14 +1,20 @@
 #!/usr/bin/env php
 <?php
-// orchestra.php
-
 require __DIR__.'/vendor/autoload.php';
 
+use PhpOrchestra\Cli\Application;
 use PhpOrchestra\Cli\Commands\Solution\InitializeCommand;
-use Symfony\Component\Console\Application;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-$application = new Application();
+$containerBuilder = new ContainerBuilder();
+$loader = new YamlFileLoader(
+    $containerBuilder, 
+    new FileLocator(__DIR__.'/config')
+);
+$loader->load('services.yaml');
 
-$application->add(new InitializeCommand());
+$containerBuilder->compile();
 
-$application->run();
+exit($containerBuilder->get(Application::class)->run());

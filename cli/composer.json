@@ -16,9 +16,12 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "symfony/console": "6.2.x-dev",
         "php-orchestra/domain": "dev-main",
-        "php-orchestra/application": "dev-main"
+        "php-orchestra/application": "dev-main",
+        "symfony/console": "6.2.x-dev",
+        "symfony/dependency-injection": "6.2.x-dev",
+        "symfony/config": "6.2.x-dev",
+        "symfony/yaml": "6.2.x-dev"
     },
     "repositories": [
         {
