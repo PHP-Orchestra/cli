@@ -16,6 +16,18 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "symfony/console": "6.2.x-dev"
-    }
+        "symfony/console": "6.2.x-dev",
+        "php-orchestra/domain": "dev-main",
+        "php-orchestra/application": "dev-main"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../application"
+        },
+        {
+            "type": "path",
+            "url": "../domain"
+        }
+    ]
 }

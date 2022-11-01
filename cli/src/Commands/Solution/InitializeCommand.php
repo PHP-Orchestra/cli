@@ -27,6 +27,15 @@ class InitializeCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /**
+         * New logic, considering each layer
+         */
+        $workingDir = $input->getArgument('working-dir');
+
+        
+
+
+        return Command::INVALID;
         $workingDir = $input->getArgument('working-dir');
 
         if (!is_dir($workingDir)) {

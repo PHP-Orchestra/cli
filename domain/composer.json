@@ -1,0 +1,19 @@
+{
+    "name": "php-orchestra/domain",
+    "description": "Domain layer for PHP Orchestra CLI",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "PhpOrchestra\\Domain\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Rúdi Rocha",
+            "email": "rudi.rocha@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}

@@ -4,8 +4,64 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "53de5f75175abf331088ecc597b852e4",
+    "content-hash": "927043647757285f60592cfadbd4b2fd",
     "packages": [
+        {
+            "name": "php-orchestra/application",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "../application",
+                "reference": "8f185f40c9446c0201ccc635df8038d95836cff9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PhpOrchestra\\Application\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rúdi Rocha",
+                    "email": "rudi.rocha@gmail.com"
+                }
+            ],
+            "description": "Application layer of PHP Orchestra",
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "php-orchestra/domain",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "../domain",
+                "reference": "a5cf20fc31a1a19f57f328dda887e13f70e1bad1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PhpOrchestra\\Domain\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rúdi Rocha",
+                    "email": "rudi.rocha@gmail.com"
+                }
+            ],
+            "description": "Domain layer for PHP Orchestra CLI",
+            "transport-options": {
+                "relative": true
+            }
+        },
         {
             "name": "psr/container",
             "version": "dev-master",
@@ -735,7 +791,9 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "symfony/console": 20
+        "symfony/console": 20,
+        "php-orchestra/domain": 20,
+        "php-orchestra/application": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
