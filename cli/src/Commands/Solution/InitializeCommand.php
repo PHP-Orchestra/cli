@@ -2,6 +2,7 @@
 
 namespace PhpOrchestra\Cli\Commands\Solution;
 
+use PhpOrchestra\Application\Commands\GenerateSolutionCommand;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -32,11 +33,21 @@ class InitializeCommand extends Command
          */
         $workingDir = $input->getArgument('working-dir');
 
-        
-
+        try {
+            $generateSolutionCommand = new GenerateSolutionCommand();
+            $generateSolutionCommand
+                ->setWorkingDirectory($workingDir)
+                ->execute();
+            $output->writeln(sprintf('<info>Orchestra solution file created at: %s</info>', $workingDir));
+        } catch (\Exception $ex) {
+            $output->writeln(
+                sprintf('<error>Failed to create Orchestra solution file. Error: %s</error>', $ex->getMessage())
+            );
+            return Command::FAILURE;
+        }
 
         return Command::INVALID;
-        $workingDir = $input->getArgument('working-dir');
+        /*$workingDir = $input->getArgument('working-dir');
 
         if (!is_dir($workingDir)) {
             $output->writeln(sprintf('<error>[%s] is not a valid directory</error>', $workingDir));
@@ -53,6 +64,6 @@ class InitializeCommand extends Command
         // $output->writeln(sprintf('<info>Creating %s file</info>', $orchestraFile));
         //TODO: Add logic to create the file 
         return Command::SUCCESS;
+        */
     }
-
 }
