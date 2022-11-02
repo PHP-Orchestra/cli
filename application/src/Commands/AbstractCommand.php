@@ -2,12 +2,12 @@
 
 namespace PhpOrchestra\Application\Commands;
 
-abstract class AbstractCommand
+abstract class AbstractCommand implements OrchestraCommandInterface
 {
     protected string $workingDirectory;
 
 
-    public function setWorkingDirectory(string $folderPath)
+    public function setWorkingDirectory(string $folderPath): self
     {
         $this->workingDirectory = $folderPath;
 
