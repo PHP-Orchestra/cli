@@ -2,12 +2,15 @@
 
 namespace PhpOrchestra\Cli\Commands\Solution;
 
-use PhpOrchestra\Application\Commands\GenerateSolutionCommand;
-use PhpOrchestra\Application\Commands\OrchestraCommandInterface;
+use PhpOrchestra\Application\Handler\CommandHandlerInterface;
+use PhpOrchestra\Application\Handler\InitializeSolutionHandler;
+use PhpOrchestra\Cli\Defaults;
+use PhpOrchestra\Domain\Entity\Solution;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
@@ -16,32 +19,41 @@ use Symfony\Component\Console\Output\OutputInterface;
     )]
 class InitializeCommand extends Command
 {
-    private readonly GenerateSolutionCommand $generateSolutionCommand;
+    private readonly InitializeSolutionHandler $initializeSolutionHandler;
     protected static $defaultDescription = 'Initialize a new Solution file.';
 
-    public function __construct(OrchestraCommandInterface $generateSolutionCommand)
+    public function __construct(CommandHandlerInterface $commandHandler)
     {
         parent::__construct();
         
-        $this->generateSolutionCommand = $generateSolutionCommand;
+        $this->initializeSolutionHandler = $commandHandler;
     }
 
     protected function configure(): void
     {
         $this
             ->setHelp('Initialize a new Solution file')
-            ->addArgument('working-dir', InputArgument::REQUIRED, 'The directory where Orchestra will be looking to.')
+            ->addArgument(Defaults::ORCHESTRA_WORKING_DIR, InputArgument::REQUIRED, 'The directory where Orchestra will be looking to.')
+            ->addOption(Defaults::ORCHESTRA_SOLUTION_NAME_PARAMETER, 's', InputOption::VALUE_OPTIONAL, 'The solution name of your project.', Defaults::ORCHESTRA_SOLUTION_NAME_DEFAULT)
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $workingDir = $input->getArgument('working-dir');
-
+        $workingDir = $input->getArgument(Defaults::ORCHESTRA_WORKING_DIR);
+        $solutionName = $input->getOption(Defaults::ORCHESTRA_SOLUTION_NAME_PARAMETER);
         try {
+            $solution = new Solution($solutionName, Defaults::ORCHESTRA_SOLUTION_VERSION, $workingDir);
+
+            $this->initializeSolutionHandler
+            ->setSolution($solution)
+            ->handle();
+           /*
             $this->generateSolutionCommand
                 ->setWorkingDirectory($workingDir)
+                ->setSolutionName($input->getArgument(Defaults::ORCHESTRA_WORKING_DIR))
                 ->execute();
+                */
             $output->writeln(sprintf('<info>Orchestra solution file created at: %s</info>', $workingDir));
         } catch (\Exception $ex) {
             $output->writeln(

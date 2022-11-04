@@ -9,6 +9,8 @@ class Solution
     public readonly String $path;
     public array $projects;
 
+    public const SOLUTION_FILE_NAME = 'orchestra.json';
+
     public function __construct(string $solutionName, string $version, string $path)
     {
         $this->name = $solutionName;
@@ -29,6 +31,11 @@ class Solution
     public function getPath(): String
     {
         return $this->path;
+    }
+
+    public function getFullPath() : string
+    {
+        return str_replace('//', '/', sprintf('%s/%s', $this->getPath(), self::SOLUTION_FILE_NAME));
     }
 
     public function addProject(Project $project): void

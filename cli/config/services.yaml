@@ -15,9 +15,11 @@ services:
     
     PhpOrchestra\Cli\Commands\Solution\InitializeCommand:
         arguments: 
-            - '@PhpOrchestra\Application\Commands\GenerateSolutionCommand'
+            - '@PhpOrchestra\Application\Handler\InitializeSolutionHandler'
 
-    PhpOrchestra\Application\Commands\GenerateSolutionCommand: ~
+    PhpOrchestra\Application\Handler\InitializeSolutionHandler:
+        arguments:
+            - '@PhpOrchestra\Application\Services\SolutionServiceInterface'
     PhpOrchestra\Application\Services\SolutionService: ~
     PhpOrchestra\Application\Services\SolutionServiceInterface: '@PhpOrchestra\Application\Services\SolutionService'
 

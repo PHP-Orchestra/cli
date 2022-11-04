@@ -11,7 +11,7 @@ class SolutionService implements SolutionServiceInterface
         // Prepare the content
         // >> Is it enough to do a direct parsing between object and Json?
         // write it on the json file
-        file_put_contents($solution->getPath(), json_encode($solution));
+        file_put_contents($solution->getFullPath(), json_encode($solution));
     }
 
 }
