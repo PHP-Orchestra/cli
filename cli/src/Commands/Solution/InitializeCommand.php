@@ -48,12 +48,7 @@ class InitializeCommand extends Command
             $this->initializeSolutionHandler
             ->setSolution($solution)
             ->handle();
-           /*
-            $this->generateSolutionCommand
-                ->setWorkingDirectory($workingDir)
-                ->setSolutionName($input->getArgument(Defaults::ORCHESTRA_WORKING_DIR))
-                ->execute();
-                */
+            
             $output->writeln(sprintf('<info>Orchestra solution file created at: %s</info>', $workingDir));
         } catch (\Exception $ex) {
             $output->writeln(

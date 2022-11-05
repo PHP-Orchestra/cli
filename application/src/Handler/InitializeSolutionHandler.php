@@ -1,7 +1,6 @@
 <?php
 namespace PhpOrchestra\Application\Handler;
 
-use InvalidArgumentException;
 use PhpOrchestra\Application\Handler\CommandHandlerInterface;
 use PhpOrchestra\Application\Services\SolutionServiceInterface;
 use PhpOrchestra\Domain\Entity\Solution;
@@ -25,14 +24,6 @@ class InitializeSolutionHandler implements CommandHandlerInterface
 
     public function handle() : void
     {
-        if (!is_dir($this->solution->getPath())) {
-            throw new InvalidArgumentException(sprintf('[%s] is not a valid directory.', $this->solution->getPath()));
-        }
-
-        if (is_file($this->solution->getFullPath())) {
-            throw new InvalidArgumentException(sprintf('[%s] already exists.', $this->solution->getFullPath()));
-        }
-
-        $this->solutionService->generate($this->solution);
+            $this->solutionService->generate($this->solution);
     }
 }
