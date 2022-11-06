@@ -32,5 +32,13 @@
             "type": "path",
             "url": "../domain"
         }
-    ]
+    ],
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "require-dev": {
+        "pestphp/pest": "2.x-dev"
+    }
 }
