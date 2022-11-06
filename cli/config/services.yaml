@@ -17,11 +17,7 @@ services:
         arguments: 
             - '@PhpOrchestra\Application\Handler\InitializeSolutionHandler'
 
-    PhpOrchestra\Application\Handler\InitializeSolutionHandler:
-        arguments:
-            - '@PhpOrchestra\Application\Services\SolutionServiceInterface'
-    PhpOrchestra\Application\Services\SolutionService: ~
-    PhpOrchestra\Application\Services\SolutionServiceInterface: '@PhpOrchestra\Application\Services\SolutionService'
+    PhpOrchestra\Application\Handler\InitializeSolutionHandler: ~
 
 
         
