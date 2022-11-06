@@ -8,35 +8,45 @@ use \Symfony\Component\Console\Tester\CommandTester;
 beforeEach(function () {
     // prepare folder for tests execution
     mkdir(getTestsOutputDirectory());
+    $this->commandTester = new CommandTester(getApplication()->find('s:i'));
 });
 afterEach(function () {
     // remove folder for tests execution
     deleteDirectory(getTestsOutputDirectory());
 });
 
-/*
 test('solution:initialize > will ask for [working-dir] parameter', function() {
-    $commandTester = new CommandTester(getApplication()->find('s:i'));
-    $commandTester->execute([
-        'working-dir' => './'
+    $commandResult = $this->commandTester->execute([
+        'working-dir' => ''
     ]);
-    expect($commandTester->execute([]))->toThrow(\RuntimeException::class);
 
-
-
+    expect($commandResult)->toBe(Command::FAILURE);
+    expect($this->commandTester->getDisplay())
+    ->toBe('Failed to create Orchestra solution file. Error: [] is not a valid directory.' . PHP_EOL);
 });
 
-*/
-/*
-test('$ solution init > will ask for working-dir parameter', function () {
-    $app = getApp();
-    $app->runCommand(['minicli', 'solution', 'init']);
-})->expectOutputRegex("/Missing required param \[working-dir\]/");
+test('solution:initialize > with invalid working-dir shows an error', function () {
+    $commandResult = $this->commandTester->execute([
+        'working-dir' => 'invalid-dir'
+    ]);
 
-test('$ solution init > with invalid working-dir shows an error', function () {
-    $app = getApp();
-    $app->runCommand(['minicli', 'solution', 'init', 'working-dir=invalid']);
-})->expectOutputRegex("/\[working-dir\] is invalid. Please provide a valid directory/");
+    expect($commandResult)->toBe(Command::FAILURE);
+    expect($this->commandTester->getDisplay())
+    ->toBe('Failed to create Orchestra solution file. Error: [invalid-dir] is not a valid directory.' . PHP_EOL);
+});
+
+test('solution:initialize /a/valid/dir > when orchestra file already exists', function () {
+    file_put_contents(getTestsOutputDirectory() . '/orchestra.json', '{}');
+ $commandResult = $this->commandTester->execute([
+        'working-dir' => getTestsOutputDirectory()
+    ]);
+
+    expect($commandResult)->toBe(Command::FAILURE);
+    expect($this->commandTester->getDisplay())
+    ->toContain('already exists.');
+});
+
+/*
 
 test('$ solution init --working-dir=/a/valid/dir > when orchestra file already exists', function () {
     file_put_contents(getTestsOutputDirectory() . '/orchestra.json', '{}');
