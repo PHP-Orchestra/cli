@@ -1,0 +1,46 @@
+{
+    "name": "php-orchestra/cli",
+    "description": "CLI tool for PHP projects orchestration",
+    "type": "application",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "PhpOrchestra\\Cli\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Rúdi Rocha",
+            "email": "rudi.rocha@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.4",
+        "php-orchestra/domain": "dev-main",
+        "php-orchestra/application": "dev-main",
+        "symfony/console": "6.2.x-dev",
+        "symfony/dependency-injection": "6.2.x-dev",
+        "symfony/config": "6.2.x-dev",
+        "symfony/yaml": "6.2.x-dev"
+        
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../application"
+        },
+        {
+            "type": "path",
+            "url": "../domain"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "require-dev": {
+        "pestphp/pest": "2.x-dev"
+    }
+}
