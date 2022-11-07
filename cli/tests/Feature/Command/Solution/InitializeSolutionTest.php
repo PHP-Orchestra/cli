@@ -61,6 +61,7 @@ test('solution:initialize /a/valid/dir > creates a standard file', function () {
 
     expect($fileUnderTest->name)->toBe(\PhpOrchestra\Cli\Defaults::ORCHESTRA_SOLUTION_NAME_DEFAULT);
     expect($fileUnderTest->version)->toBe(\PhpOrchestra\Cli\Defaults::ORCHESTRA_SOLUTION_VERSION);
+    expect($fileUnderTest->projects)->toBe([]);
 
 });
 
@@ -80,5 +81,6 @@ test('solution:initialize /a/valid/dir --solution-name="test solution > creates 
 
     expect($fileUnderTest->name)->toBe('test solution');
     expect($fileUnderTest->version)->toBe(\PhpOrchestra\Cli\Defaults::ORCHESTRA_SOLUTION_VERSION);
+    expect($fileUnderTest->projects)->toBe([]);
 
 });

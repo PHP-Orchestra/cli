@@ -16,6 +16,7 @@ class Solution
         $this->name = $solutionName;
         $this->version = $version;
         $this->path = $path;
+        $this->projects = [];
     }
 
     public function getName(): string
@@ -53,6 +54,7 @@ class Solution
         return [
             'name' => $this->getName(),
             'version' => $this->getVersion(),
+            'projects' => $this->getProjects()
         ];
     }
 }
