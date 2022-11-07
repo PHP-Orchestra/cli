@@ -61,5 +61,5 @@ function deleteDirectory($dir)
 
 function getTestsOutputDirectory(): string
 {
-    return __DIR__ . '/output';
+    return __DIR__ . DIRECTORY_SEPARATOR . 'output';
 }

@@ -46,44 +46,39 @@ test('solution:initialize /a/valid/dir > when orchestra file already exists', fu
     ->toContain('already exists.');
 });
 
-/*
+test('solution:initialize /a/valid/dir > creates a standard file', function () {
 
-test('$ solution init --working-dir=/a/valid/dir > when orchestra file already exists', function () {
-    file_put_contents(getTestsOutputDirectory() . '/orchestra.json', '{}');
+    $commandResult = $this->commandTester->execute([
+        'working-dir' => getTestsOutputDirectory()
+    ]);
 
-    $app = getApp();
-    $app->runCommand(['minicli', 'solution', 'init', 'working-dir=' . getTestsOutputDirectory()]);
-})->expectOutputRegex("/Orchestra manifest file is already created./");
-
-
-test('$ solution init working-dir=/a/valid/dir > creates a standard file', function () {
-    $app = getApp();
-    $app->runCommand(['minicli', 'solution', 'init', 'working-dir=' . getTestsOutputDirectory()]);
-
-    expect(is_file(getTestsOutputDirectory() . '/orchestra.json'))->toBe(true);
+    expect($commandResult)->toBe(Command::SUCCESS);
+    expect($this->commandTester->getDisplay())
+    ->toBe('Orchestra solution file created at: '.getTestsOutputDirectory() . PHP_EOL);
+    expect(is_file(getTestsOutputDirectory() . DIRECTORY_SEPARATOR .'orchestra.json'))->toBe(true);
 
     $fileUnderTest = json_decode(file_get_contents(getTestsOutputDirectory() . '/orchestra.json'));
 
-    expect($fileUnderTest->name)->toBe(Constants::ORCHESTRA_SOLUTION_NAME_DEFAULT);
-    expect($fileUnderTest->version)->toBe(Constants::ORCHESTRA_SOLUTION_VERSION);
-    expect($fileUnderTest->projects)->toBe([]);
+    expect($fileUnderTest->name)->toBe(\PhpOrchestra\Cli\Defaults::ORCHESTRA_SOLUTION_NAME_DEFAULT);
+    expect($fileUnderTest->version)->toBe(\PhpOrchestra\Cli\Defaults::ORCHESTRA_SOLUTION_VERSION);
+
 });
 
-test('$ solution init working-dir=/a/valid/dir solution-name="Feature Tests" > creates a file with custom solution name', function () {
-    $app = getApp();
-    $app->runCommand(['minicli', 'solution', 'init', 'working-dir=' . getTestsOutputDirectory(), 'solution-name=Feature Tests']);
+test('solution:initialize /a/valid/dir --solution-name="test solution > creates a standard file', function () {
 
-    expect(is_file(getTestsOutputDirectory() . '/orchestra.json'))->toBe(true);
+    $commandResult = $this->commandTester->execute([
+        'working-dir' => getTestsOutputDirectory(),
+        '--solution-name' => 'test solution'
+    ]);
+
+    expect($commandResult)->toBe(Command::SUCCESS);
+    expect($this->commandTester->getDisplay())
+    ->toBe('Orchestra solution file created at: '.getTestsOutputDirectory() . PHP_EOL);
+    expect(is_file(getTestsOutputDirectory() . DIRECTORY_SEPARATOR .'orchestra.json'))->toBe(true);
 
     $fileUnderTest = json_decode(file_get_contents(getTestsOutputDirectory() . '/orchestra.json'));
 
-    expect($fileUnderTest->name)->toBe('Feature Tests');
-    expect($fileUnderTest->version)->toBe(Constants::ORCHESTRA_SOLUTION_VERSION);
-    expect($fileUnderTest->projects)->toBe([]);
-});
+    expect($fileUnderTest->name)->toBe('test solution');
+    expect($fileUnderTest->version)->toBe(\PhpOrchestra\Cli\Defaults::ORCHESTRA_SOLUTION_VERSION);
 
-test('$ solution init --help > displays command usage', function () {
-    $app = getApp();
-    $app->runCommand(['minicli', 'solution', 'init', '--help']);
-})->expectOutputRegex("/Usage: solution init --working-dir=\/a\/valid\/dir/");
-*/
+});
