@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand(
     name: 'solution:initialize',
     description: 'Initialize a new Solution file.'
-    )]
+)]
 class InitializeCommand extends Command
 {
     private readonly InitializeSolutionHandler $initializeSolutionHandler;
@@ -25,7 +25,7 @@ class InitializeCommand extends Command
     public function __construct(CommandHandlerInterface $commandHandler)
     {
         parent::__construct();
-        
+
         $this->initializeSolutionHandler = $commandHandler;
     }
 
@@ -48,7 +48,7 @@ class InitializeCommand extends Command
             $this->initializeSolutionHandler
             ->setSolution($solution)
             ->handle();
-            
+
             $output->writeln(sprintf('<info>Orchestra solution file created at: %s</info>', $workingDir));
         } catch (\Exception $ex) {
             $output->writeln(

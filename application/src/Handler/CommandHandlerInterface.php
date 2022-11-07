@@ -4,5 +4,5 @@ namespace PhpOrchestra\Application\Handler;
 
 interface CommandHandlerInterface
 {
-    public function handle() : void;
+    public function handle(): void;
 }

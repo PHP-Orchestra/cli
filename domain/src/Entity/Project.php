@@ -2,7 +2,6 @@
 
 namespace PhpOrchestra\Domain\Entity;
 
-
 class Project
 {
     public readonly string $name;

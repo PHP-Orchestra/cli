@@ -1,9 +1,9 @@
 <?php
 
 use  PhpOrchestra\Application\Handler\InitializeSolutionHandler;
-use \PhpOrchestra\Cli\Commands\Solution\InitializeCommand;
+use PhpOrchestra\Cli\Commands\Solution\InitializeCommand;
 use Symfony\Component\Console\Command\Command;
-use \Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\Console\Tester\CommandTester;
 
 beforeEach(function () {
     // prepare folder for tests execution
@@ -15,7 +15,7 @@ afterEach(function () {
     deleteDirectory(getTestsOutputDirectory());
 });
 
-test('solution:initialize > will ask for [working-dir] parameter', function() {
+test('solution:initialize > will ask for [working-dir] parameter', function () {
     $commandResult = $this->commandTester->execute([
         'working-dir' => ''
     ]);
@@ -37,9 +37,9 @@ test('solution:initialize > with invalid working-dir shows an error', function (
 
 test('solution:initialize /a/valid/dir > when orchestra file already exists', function () {
     file_put_contents(getTestsOutputDirectory() . '/orchestra.json', '{}');
- $commandResult = $this->commandTester->execute([
-        'working-dir' => getTestsOutputDirectory()
-    ]);
+    $commandResult = $this->commandTester->execute([
+           'working-dir' => getTestsOutputDirectory()
+       ]);
 
     expect($commandResult)->toBe(Command::FAILURE);
     expect($this->commandTester->getDisplay())
@@ -47,7 +47,6 @@ test('solution:initialize /a/valid/dir > when orchestra file already exists', fu
 });
 
 test('solution:initialize /a/valid/dir > creates a standard file', function () {
-
     $commandResult = $this->commandTester->execute([
         'working-dir' => getTestsOutputDirectory()
     ]);
@@ -62,11 +61,9 @@ test('solution:initialize /a/valid/dir > creates a standard file', function () {
     expect($fileUnderTest->name)->toBe(\PhpOrchestra\Cli\Defaults::ORCHESTRA_SOLUTION_NAME_DEFAULT);
     expect($fileUnderTest->version)->toBe(\PhpOrchestra\Cli\Defaults::ORCHESTRA_SOLUTION_VERSION);
     expect($fileUnderTest->projects)->toBe([]);
-
 });
 
 test('solution:initialize /a/valid/dir --solution-name="test solution > creates a standard file', function () {
-
     $commandResult = $this->commandTester->execute([
         'working-dir' => getTestsOutputDirectory(),
         '--solution-name' => 'test solution'
@@ -82,5 +79,4 @@ test('solution:initialize /a/valid/dir --solution-name="test solution > creates 
     expect($fileUnderTest->name)->toBe('test solution');
     expect($fileUnderTest->version)->toBe(\PhpOrchestra\Cli\Defaults::ORCHESTRA_SOLUTION_VERSION);
     expect($fileUnderTest->projects)->toBe([]);
-
 });

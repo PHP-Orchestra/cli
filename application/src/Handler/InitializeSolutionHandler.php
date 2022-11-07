@@ -1,4 +1,5 @@
 <?php
+
 namespace PhpOrchestra\Application\Handler;
 
 use InvalidArgumentException;
@@ -9,14 +10,14 @@ class InitializeSolutionHandler implements CommandHandlerInterface
 {
     private readonly Solution $solution;
 
-    public function setSolution(Solution $solution) : self
+    public function setSolution(Solution $solution): self
     {
         $this->solution = $solution;
 
         return $this;
     }
 
-    public function handle() : void
+    public function handle(): void
     {
         if (!is_dir($this->solution->getPath())) {
             throw new InvalidArgumentException(sprintf('[%s] is not a valid directory.', $this->solution->getPath()));
