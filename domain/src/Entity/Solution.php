@@ -34,7 +34,7 @@ class Solution
         return $this->path;
     }
 
-    public function getFullPath() : string
+    public function getFullPath(): string
     {
         return str_replace('//', '/', sprintf('%s/%s', $this->getPath(), self::SOLUTION_FILE_NAME));
     }

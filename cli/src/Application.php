@@ -1,4 +1,5 @@
 <?php
+
 namespace PhpOrchestra\Cli;
 
 use Symfony\Component\Console\Application as BaseApplication;
