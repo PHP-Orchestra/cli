@@ -35,6 +35,7 @@ class InitializeCommand extends Command
             ->setHelp('Initialize a new Solution file')
             ->addArgument(Defaults::ORCHESTRA_WORKING_DIR, InputArgument::REQUIRED, 'The directory where Orchestra will be looking to.')
             ->addOption(Defaults::ORCHESTRA_SOLUTION_NAME_PARAMETER, 's', InputOption::VALUE_OPTIONAL, 'The solution name of your project.', Defaults::ORCHESTRA_SOLUTION_NAME_DEFAULT)
+            ->addOption(Defaults::ORCHESTRA_SCAN_FOR_PROJECTS, 'scan', InputOption::VALUE_NEGATABLE, 'Scan root folder for projects.', true)
         ;
     }
 
@@ -42,9 +43,10 @@ class InitializeCommand extends Command
     {
         $workingDir = $input->getArgument(Defaults::ORCHESTRA_WORKING_DIR);
         $solutionName = $input->getOption(Defaults::ORCHESTRA_SOLUTION_NAME_PARAMETER);
+        $isProjectScan = $input->getOption(Defaults::ORCHESTRA_SCAN_FOR_PROJECTS);
         try {
             $solution = new Solution($solutionName, Defaults::ORCHESTRA_SOLUTION_VERSION, $workingDir);
-
+           
             $this->initializeSolutionHandler
             ->setSolution($solution)
             ->handle();
