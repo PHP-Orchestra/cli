@@ -13,5 +13,4 @@ final class Defaults
     public const ORCHESTRA_SOLUTION_NAME_DEFAULT = 'Orchestra Solution';
 
     public const ORCHESTRA_SOLUTION_VERSION = '0.1';
-
 }

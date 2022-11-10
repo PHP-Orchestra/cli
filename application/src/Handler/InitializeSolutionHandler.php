@@ -9,11 +9,18 @@ use PhpOrchestra\Domain\Entity\Solution;
 class InitializeSolutionHandler implements CommandHandlerInterface
 {
     private readonly Solution $solution;
+    private bool $scanforProjects = false;
 
     public function setSolution(Solution $solution): self
     {
         $this->solution = $solution;
 
+        return $this;
+    }
+
+    public function doProjectScan(bool $flag): self
+    {
+        $this->scanforProjects = $flag;
         return $this;
     }
 
@@ -25,6 +32,10 @@ class InitializeSolutionHandler implements CommandHandlerInterface
 
         if (is_file($this->solution->getFullPath())) {
             throw new InvalidArgumentException(sprintf('[%s] already exists.', $this->solution->getFullPath()));
+        }
+
+        if($this->scanforProjects) {
+            // to do: add logic
         }
 
         file_put_contents($this->solution->getFullPath(), json_encode($this->solution->toArray(), JSON_PRETTY_PRINT));

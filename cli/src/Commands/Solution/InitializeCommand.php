@@ -46,9 +46,10 @@ class InitializeCommand extends Command
         $isProjectScan = $input->getOption(Defaults::ORCHESTRA_SCAN_FOR_PROJECTS);
         try {
             $solution = new Solution($solutionName, Defaults::ORCHESTRA_SOLUTION_VERSION, $workingDir);
-           
+
             $this->initializeSolutionHandler
             ->setSolution($solution)
+            ->doProjectScan($isProjectScan)
             ->handle();
 
             $output->writeln(sprintf('<info>Orchestra solution file created at: %s</info>', $workingDir));
