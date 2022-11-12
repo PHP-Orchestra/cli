@@ -4,6 +4,7 @@ namespace PhpOrchestra\Cli\Commands\Solution;
 
 use PhpOrchestra\Application\Handler\CommandHandlerInterface;
 use PhpOrchestra\Application\Handler\InitializeSolutionHandler;
+use PhpOrchestra\Application\Facade\ProjectScanner;
 use PhpOrchestra\Cli\Defaults;
 use PhpOrchestra\Domain\Entity\Solution;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -47,9 +48,14 @@ class InitializeCommand extends Command
         try {
             $solution = new Solution($solutionName, Defaults::ORCHESTRA_SOLUTION_VERSION, $workingDir);
 
+            if ($isProjectScan) {
+                $scanner = new ProjectScanner(0);
+                $projects = $scanner->scan($solution->getPath());
+                $solution->setProjects($projects);
+            }
+
             $this->initializeSolutionHandler
             ->setSolution($solution)
-            ->doProjectScan($isProjectScan)
             ->handle();
 
             $output->writeln(sprintf('<info>Orchestra solution file created at: %s</info>', $workingDir));

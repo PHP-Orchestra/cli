@@ -44,6 +44,15 @@ class Solution
         $this->projects[$project->getName()] = $project;
     }
 
+    /**
+     * @param array $projects
+     */
+    public function setProjects($projects) : self
+    {
+        $this->projects = $projects;
+        return $this;
+    }
+
     public function getProjects(): array
     {
         return $this->projects;
