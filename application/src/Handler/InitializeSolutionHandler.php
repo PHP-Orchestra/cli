@@ -25,7 +25,7 @@ class InitializeSolutionHandler implements CommandHandlerInterface
         return $this;
     }
 
-    public function doProjectScan(bool $flag, int $scanDepth) : self
+    public function doProjectScan(bool $flag, int $scanDepth): self
     {
         $this->isScanforProjects = $flag;
         $this->projectScanner->setDepthLevel($scanDepth);
@@ -46,7 +46,7 @@ class InitializeSolutionHandler implements CommandHandlerInterface
         if ($this->isScanforProjects === true) {
             $this->solution->setProjects(
                 $this->projectScanner->scan($this->solution->getPath())
-                );
+            );
         }
 
         file_put_contents($this->solution->getFullPath(), json_encode($this->solution->toArray(), JSON_PRETTY_PRINT));

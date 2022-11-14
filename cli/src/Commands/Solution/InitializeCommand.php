@@ -47,7 +47,7 @@ class InitializeCommand extends Command
         $solutionName = $input->getOption(Defaults::ORCHESTRA_SOLUTION_NAME_PARAMETER);
         $isProjectScan = $input->getOption(Defaults::ORCHESTRA_SCAN_FOR_PROJECTS);
         $projectScanDepth = $input->getOption(Defaults::ORCHESTRA_SCAN_FOR_PROJECTS_DEPTH);
-       
+
         try {
             $solution = new Solution($solutionName, Defaults::ORCHESTRA_SOLUTION_VERSION, $workingDir);
 
