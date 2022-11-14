@@ -81,17 +81,22 @@ test('solution:initialize /a/valid/dir --solution-name="test solution" > creates
     expect($fileUnderTest->projects)->toBe([]);
 });
 
-test('solution:initialize /a/valid/dir --no-scan-for-projects > creates a standard file', function () {
+test('solution:initialize /a/valid/dir --project-scan > creates a standard file with projects', function () {
+    //prepare project folder
+    $projectFolder = sprintf('%s/project', getTestsOutputDirectory());
+    mkdir($projectFolder);
+    file_put_contents(sprintf('%s/composer.json', $projectFolder), '{}');
+
     $commandResult = $this->commandTester->execute([
         'working-dir' => getTestsOutputDirectory(),
-        '--no-scan-for-projects'
+        '--project-scan' => 'yes',
+    '--solution-name' => 'test solution'
     ]);
-
     expect($commandResult)->toBe(Command::SUCCESS);
     expect($this->commandTester->getDisplay())
     ->toBe('Orchestra solution file created at: '.getTestsOutputDirectory() . PHP_EOL);
     expect(is_file(getTestsOutputDirectory() . DIRECTORY_SEPARATOR .'orchestra.json'))->toBe(true);
 
     $fileUnderTest = json_decode(file_get_contents(getTestsOutputDirectory() . '/orchestra.json'));
-    expect($fileUnderTest->projects)->toBe([]);
+    expect(count($fileUnderTest->projects))->toBe(1);
 });

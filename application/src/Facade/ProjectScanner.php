@@ -9,11 +9,6 @@ class ProjectScanner
     private const EXCLUDED_DIRECTORIES = ['.', '..', 'vendor', '.git', '.vscode', '.idea'];
     private int $depthLevel = 0;
 
-    public function __construct(int $depthLevel)
-    {
-        $this->depthLevel = $depthLevel;
-    }
-
     /**
     * Finding projects is about searching where a composer.json file is in.
     * This function should find all the projects starting from the orchestra.json file directory.
@@ -44,6 +39,16 @@ class ProjectScanner
         }
 
         return $projectsFound;
+    }
+
+    /**
+     * @param int $depthLevel
+     */
+    public function setDepthLevel(int $depthLevel): self
+    {
+        $this->depthLevel = $depthLevel;
+
+        return $this;
     }
 
     private function hasComposerFile($path): bool

@@ -35,8 +35,9 @@ class InitializeCommand extends Command
         $this
             ->setHelp('Initialize a new Solution file')
             ->addArgument(Defaults::ORCHESTRA_WORKING_DIR, InputArgument::REQUIRED, 'The directory where Orchestra will be looking to.')
-            ->addOption(Defaults::ORCHESTRA_SOLUTION_NAME_PARAMETER, 's', InputOption::VALUE_OPTIONAL, 'The solution name of your project.', Defaults::ORCHESTRA_SOLUTION_NAME_DEFAULT)
-            ->addOption(Defaults::ORCHESTRA_SCAN_FOR_PROJECTS, 'scan', InputOption::VALUE_NEGATABLE, 'Scan root folder for projects.', true)
+            ->addOption(Defaults::ORCHESTRA_SOLUTION_NAME_PARAMETER, 'name', InputOption::VALUE_OPTIONAL, 'The solution name of your project.', Defaults::ORCHESTRA_SOLUTION_NAME_DEFAULT)
+            ->addOption(Defaults::ORCHESTRA_SCAN_FOR_PROJECTS, null, InputOption::VALUE_NONE, 'Do a scan on the root folder for projects.')
+            ->addOption(Defaults::ORCHESTRA_SCAN_FOR_PROJECTS_DEPTH, null, InputOption::VALUE_OPTIONAL, 'Folder depth level for --project-scan option.', 0)
         ;
     }
 
@@ -45,17 +46,14 @@ class InitializeCommand extends Command
         $workingDir = $input->getArgument(Defaults::ORCHESTRA_WORKING_DIR);
         $solutionName = $input->getOption(Defaults::ORCHESTRA_SOLUTION_NAME_PARAMETER);
         $isProjectScan = $input->getOption(Defaults::ORCHESTRA_SCAN_FOR_PROJECTS);
+        $projectScanDepth = $input->getOption(Defaults::ORCHESTRA_SCAN_FOR_PROJECTS_DEPTH);
+       
         try {
             $solution = new Solution($solutionName, Defaults::ORCHESTRA_SOLUTION_VERSION, $workingDir);
 
-            if ($isProjectScan) {
-                $scanner = new ProjectScanner(0);
-                $projects = $scanner->scan($solution->getPath());
-                $solution->setProjects($projects);
-            }
-
             $this->initializeSolutionHandler
             ->setSolution($solution)
+            ->doProjectScan($isProjectScan, $projectScanDepth)
             ->handle();
 
             $output->writeln(sprintf('<info>Orchestra solution file created at: %s</info>', $workingDir));
