@@ -20,7 +20,10 @@ services:
     PhpOrchestra\Application\Handler\InitializeSolutionHandler:
         arguments:
           - '@PhpOrchestra\Application\Facade\ProjectScanner'
-    PhpOrchestra\Application\Facade\ProjectScanner: ~
+    PhpOrchestra\Application\Facade\ProjectScanner:
+        arguments:
+          - '@PhpOrchestra\Application\Adapter\ComposerAdapter'
+    PhpOrchestra\Application\Adapter\ComposerAdapter: ~
 
 
         

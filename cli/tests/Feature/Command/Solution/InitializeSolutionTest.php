@@ -1,7 +1,6 @@
 <?php
 
 use  PhpOrchestra\Application\Handler\InitializeSolutionHandler;
-use PhpOrchestra\Cli\Commands\Solution\InitializeCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
@@ -85,7 +84,7 @@ test('solution:initialize /a/valid/dir --project-scan > creates a standard file 
     //prepare project folder
     $projectFolder = sprintf('%s/project', getTestsOutputDirectory());
     mkdir($projectFolder);
-    file_put_contents(sprintf('%s/composer.json', $projectFolder), '{}');
+    file_put_contents(sprintf('%s/composer.json', $projectFolder), '{"name": "project"}');
 
     $commandResult = $this->commandTester->execute([
         'working-dir' => getTestsOutputDirectory(),
@@ -99,4 +98,8 @@ test('solution:initialize /a/valid/dir --project-scan > creates a standard file 
 
     $fileUnderTest = json_decode(file_get_contents(getTestsOutputDirectory() . '/orchestra.json'));
     expect(count($fileUnderTest->projects))->toBe(1);
+
+    $firstProject = $fileUnderTest->projects[0];
+
+    
 });

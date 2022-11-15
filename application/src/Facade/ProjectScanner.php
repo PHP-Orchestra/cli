@@ -2,12 +2,18 @@
 
 namespace PhpOrchestra\Application\Facade;
 
+use PhpOrchestra\Application\Adapter\ComposerAdapter;
 use PhpOrchestra\Domain\Entity\Project;
 
 class ProjectScanner
 {
     private const EXCLUDED_DIRECTORIES = ['.', '..', 'vendor', '.git', '.vscode', '.idea'];
     private int $depthLevel = 0;
+    private ComposerAdapter $composerAdapter;
+
+    public function __construct(ComposerAdapter $adapter){
+        $this->composerAdapter = $adapter;
+    }
 
     /**
     * Finding projects is about searching where a composer.json file is in.
@@ -26,9 +32,11 @@ class ProjectScanner
 
                 if (is_dir($currentDirectory) && !in_array($directoryItem, self::EXCLUDED_DIRECTORIES)) {
                     if ($this->hasComposerFile($currentDirectory)) {
+                        $composerEntity = $this->composerAdapter->fetch($currentDirectory);
+                        
                         // create Project entity and return
                         $project = (new Project())
-                        ->setName($directoryItem)
+                        ->setName($composerEntity->getName())
                         ->setPath($currentDirectory);
                         $projectsFound[] = $project;
                     } else {

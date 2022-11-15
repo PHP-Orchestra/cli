@@ -1,19 +1,27 @@
 {
-    "name": "php-orchestra/application",
-    "description": "Application layer of PHP Orchestra",
-    "type": "library",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "PhpOrchestra\\Application\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Rúdi Rocha",
-            "email": "rudi.rocha@gmail.com"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {}
+  "name": "php-orchestra/application",
+  "description": "Application layer of PHP Orchestra",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "PhpOrchestra\\Application\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Rúdi Rocha",
+      "email": "rudi.rocha@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php-orchestra/domain": "dev-main"
+  },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../domain"
+    }
+  ]
 }
