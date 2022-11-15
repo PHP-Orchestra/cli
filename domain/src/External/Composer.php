@@ -13,7 +13,7 @@ class Composer
     {
         $this->name = $data['name'];
         $this->description = $data['description'] ?? '';
-        $this->type = $data['type'];
+        $this->type = $data['type'] ?? '' ;
     }
 
     /**

@@ -89,7 +89,7 @@ test('solution:initialize /a/valid/dir --project-scan > creates a standard file 
     $commandResult = $this->commandTester->execute([
         'working-dir' => getTestsOutputDirectory(),
         '--project-scan' => 'yes',
-    '--solution-name' => 'test solution'
+        '--solution-name' => 'test solution'
     ]);
     expect($commandResult)->toBe(Command::SUCCESS);
     expect($this->commandTester->getDisplay())
@@ -100,6 +100,6 @@ test('solution:initialize /a/valid/dir --project-scan > creates a standard file 
     expect(count($fileUnderTest->projects))->toBe(1);
 
     $firstProject = $fileUnderTest->projects[0];
-
-    
+    expect($firstProject->name)->toBe('project');
+    expect($firstProject->path)->not()->toBeEmpty();
 });
