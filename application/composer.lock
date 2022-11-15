@@ -1,0 +1,49 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "f3db22c9e40be7560ee8894fce37fe36",
+    "packages": [
+        {
+            "name": "php-orchestra/domain",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "../domain",
+                "reference": "1e4e27c120df04fe7d4b2f4be96218c54ecddd88"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PhpOrchestra\\Domain\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rúdi Rocha",
+                    "email": "rudi.rocha@gmail.com"
+                }
+            ],
+            "description": "Domain layer for PHP Orchestra CLI",
+            "transport-options": {
+                "relative": true
+            }
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "php-orchestra/domain": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
+}

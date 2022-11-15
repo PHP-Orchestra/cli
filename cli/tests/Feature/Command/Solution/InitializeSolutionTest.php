@@ -1,7 +1,6 @@
 <?php
 
 use  PhpOrchestra\Application\Handler\InitializeSolutionHandler;
-use PhpOrchestra\Cli\Commands\Solution\InitializeCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
@@ -63,7 +62,7 @@ test('solution:initialize /a/valid/dir > creates a standard file', function () {
     expect($fileUnderTest->projects)->toBe([]);
 });
 
-test('solution:initialize /a/valid/dir --solution-name="test solution > creates a standard file', function () {
+test('solution:initialize /a/valid/dir --solution-name="test solution" > creates a standard file', function () {
     $commandResult = $this->commandTester->execute([
         'working-dir' => getTestsOutputDirectory(),
         '--solution-name' => 'test solution'
@@ -79,4 +78,28 @@ test('solution:initialize /a/valid/dir --solution-name="test solution > creates 
     expect($fileUnderTest->name)->toBe('test solution');
     expect($fileUnderTest->version)->toBe(\PhpOrchestra\Cli\Defaults::ORCHESTRA_SOLUTION_VERSION);
     expect($fileUnderTest->projects)->toBe([]);
+});
+
+test('solution:initialize /a/valid/dir --project-scan > creates a standard file with projects', function () {
+    //prepare project folder
+    $projectFolder = sprintf('%s/project', getTestsOutputDirectory());
+    mkdir($projectFolder);
+    file_put_contents(sprintf('%s/composer.json', $projectFolder), '{"name": "project"}');
+
+    $commandResult = $this->commandTester->execute([
+        'working-dir' => getTestsOutputDirectory(),
+        '--project-scan' => 'yes',
+        '--solution-name' => 'test solution'
+    ]);
+    expect($commandResult)->toBe(Command::SUCCESS);
+    expect($this->commandTester->getDisplay())
+    ->toBe('Orchestra solution file created at: '.getTestsOutputDirectory() . PHP_EOL);
+    expect(is_file(getTestsOutputDirectory() . DIRECTORY_SEPARATOR .'orchestra.json'))->toBe(true);
+
+    $fileUnderTest = json_decode(file_get_contents(getTestsOutputDirectory() . '/orchestra.json'));
+    expect(count($fileUnderTest->projects))->toBe(1);
+
+    $firstProject = $fileUnderTest->projects[0];
+    expect($firstProject->name)->toBe('project');
+    expect($firstProject->path)->not()->toBeEmpty();
 });
