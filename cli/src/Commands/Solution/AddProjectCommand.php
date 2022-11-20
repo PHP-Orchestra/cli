@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
     )]
 class AddProjectCommand extends Command
 {
-    protected static $defaultDescription = 'Initialize a new Solution file.';
+    protected static $defaultDescription = 'Adds a project to an existent solution';
 
     protected function configure()
     {
@@ -27,6 +27,8 @@ class AddProjectCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        die('hello world');
+        $projectDir = $input->getArgument(Defaults::ORCHESTRA_PROJECT_DIR);
+        
+        return Command::SUCCESS;
     }
 }
