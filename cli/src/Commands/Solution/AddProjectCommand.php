@@ -28,7 +28,7 @@ class AddProjectCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $projectDir = $input->getArgument(Defaults::ORCHESTRA_PROJECT_DIR);
-        
+        die($projectDir);
         return Command::SUCCESS;
     }
 }
