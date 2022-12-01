@@ -13,6 +13,6 @@ final class Defaults
 
     // Default values
     public const ORCHESTRA_SOLUTION_NAME_DEFAULT = 'Orchestra Solution';
-
+    public const ORCHESTRA_SOLUTION_WORKING_DIR_DEFAULT = '.';
     public const ORCHESTRA_SOLUTION_VERSION = '0.1';
 }

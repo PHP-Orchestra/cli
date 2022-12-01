@@ -1,5 +1,6 @@
 <?php
 
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
 beforeEach(function () {
@@ -8,10 +9,12 @@ beforeEach(function () {
     $this->commandTester = new CommandTester(getApplication()->find('s:add-project'));
     });
 
-test('Hello World', function() {
+test('solution:add-project > will ask for [project-dir] parameter', function () {
     $commandResult = $this->commandTester->execute([
         'project-dir' => ''
     ]);
+
+    expect($commandResult)->toBe(Command::FAILURE);
     expect($this->commandTester->getDisplay())
-        ->toBe('hello world');
+    ->toBe('Failed to add project to the solution file. Error: [./orchestra.json] solution file does not exist.' . PHP_EOL);
 });

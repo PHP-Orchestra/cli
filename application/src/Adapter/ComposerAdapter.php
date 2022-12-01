@@ -5,7 +5,7 @@ namespace PhpOrchestra\Application\Adapter;
 use InvalidArgumentException;
 use PhpOrchestra\Domain\External\Composer;
 
-class ComposerAdapter
+class ComposerAdapter implements AdapterInterface
 {
     public function fetch(string $filePath) : Composer
     {
