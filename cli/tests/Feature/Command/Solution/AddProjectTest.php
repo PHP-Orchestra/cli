@@ -18,3 +18,14 @@ test('solution:add-project > will ask for [project-dir] parameter', function () 
     expect($this->commandTester->getDisplay())
     ->toBe('Failed to add project to the solution file. Error: [./orchestra.json] solution file does not exist.' . PHP_EOL);
 });
+
+test('solution:add-project > with invalid [project-dir] parameter shows an error', function () {
+    file_put_contents(getTestsOutputDirectory() . '/orchestra.json', '{}');
+    $commandResult = $this->commandTester->execute([
+        'project-dir' => 'invalid dir'
+    ]);
+
+    expect($commandResult)->toBe(Command::FAILURE);
+    expect($this->commandTester->getDisplay())
+    ->toBe('Failed to add project to the solution file. Error: [./orchestra.json] solution file does not exist.' . PHP_EOL);
+});
