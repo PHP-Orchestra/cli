@@ -25,6 +25,9 @@
         "symfony/yaml": "^6.2"
         
     },
+    "require-dev": {
+        "pestphp/pest": "^2"
+    },
     "repositories": [
         {
             "type": "path",
@@ -40,7 +43,9 @@
             "pestphp/pest-plugin": true
         }
     },
-    "require-dev": {
-        "pestphp/pest": "^2"
+    "scripts": {
+        "test" : [
+            "./vendor/bin/pest"
+        ]
     }
 }
