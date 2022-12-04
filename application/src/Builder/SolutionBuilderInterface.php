@@ -10,5 +10,6 @@ interface SolutionBuilderInterface
     
     public function build() : Solution;
 
-    public function setSolutionData(array $data) : void;
+    public function setSolutionData(array $data) : self;
+    public function setSolutionPath(string $path) : self;
 }

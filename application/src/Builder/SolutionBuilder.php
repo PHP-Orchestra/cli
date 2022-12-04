@@ -1,28 +1,32 @@
  <?php
- namespace PhpOrchestra\Application\Builder;
 
- use PhpOrchestra\Domain\Entity\Solution;
+  namespace PhpOrchestra\Application\Builder;
 
- class SolutionBuilder implements SolutionBuilderInterface
- {
+  use PhpOrchestra\Domain\Entity\Solution;
 
-   private $solutionData = [];
-   private ?Solution $builtSolution;
-    public function reset () : void
+  class SolutionBuilder implements SolutionBuilderInterface
+  {
+
+    private $solutionData = [];
+    private ?Solution $builtSolution;
+    public function reset(): void
     {
       $this->builtSolution = null;
     }
 
-    public function setSolutionData(array $data) : void
+    public function setSolutionData(array $data): void
     {
-         $this->solutionData = $data;
+      $this->solutionData = $data;
     }
 
-    public function build() : Solution
+    public function build(): Solution
     {
-      $this->builtSolution = new Solution(); // TODO: Continue this builder
 
+      $this->builtSolution = new Solution(
+        $this->solutionData['name'],
+        $this->solutionData['version']
+      );
+      
+      return $this->builtSolution;
     }
-
-    
- }
+  }
