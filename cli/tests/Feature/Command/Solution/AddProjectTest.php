@@ -5,9 +5,13 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 beforeEach(function () {
     // prepare folder for tests execution
-    //mkdir(getTestsOutputDirectory());
+    mkdir(getTestsOutputDirectory());
     $this->commandTester = new CommandTester(getApplication()->find('s:add-project'));
     });
+afterEach(function () {
+    // remove folder for tests execution
+    deleteDirectory(getTestsOutputDirectory());
+});
 
 test('solution:add-project > will ask for [project-dir] parameter', function () {
     $commandResult = $this->commandTester->execute([
@@ -22,7 +26,8 @@ test('solution:add-project > will ask for [project-dir] parameter', function () 
 test('solution:add-project > with invalid [project-dir] parameter shows an error', function () {
     file_put_contents(getTestsOutputDirectory() . '/orchestra.json', '{}');
     $commandResult = $this->commandTester->execute([
-        'project-dir' => 'invalid dir'
+        'project-dir' => 'invalid dir',
+        'working-dir' => getTestsOutputDirectory()
     ]);
 
     expect($commandResult)->toBe(Command::FAILURE);

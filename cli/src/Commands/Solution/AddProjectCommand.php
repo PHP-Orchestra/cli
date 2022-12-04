@@ -40,17 +40,19 @@ class AddProjectCommand extends Command
         $this
             ->setHelp(self::$defaultDescription)
             ->addArgument(Defaults::ORCHESTRA_PROJECT_DIR, InputArgument::REQUIRED, 'The directory where your project is at.')
+            ->addArgument(Defaults::ORCHESTRA_WORKING_DIR, InputArgument::OPTIONAL, 'The directory where your solution is at.', Defaults::ORCHESTRA_SOLUTION_WORKING_DIR_DEFAULT)
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $workingDir = $input->getArgument(Defaults::ORCHESTRA_WORKING_DIR);
         $projectDir = $input->getArgument(Defaults::ORCHESTRA_PROJECT_DIR);
+    
         
         try {
-            $solution = $this->solutionAdapter->fetch(
-                sprintf('%s/orchestra.json', Defaults::ORCHESTRA_SOLUTION_WORKING_DIR_DEFAULT)
-            );
+            $solution = $this->solutionAdapter->fetch($workingDir);
+            
             $this->addProjectHandler
             ->setSolution($solution);
 
