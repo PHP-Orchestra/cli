@@ -35,7 +35,9 @@ services:
           - '@PhpOrchestra\Application\Adapter\ComposerAdapter'
     
     PhpOrchestra\Application\Adapter\ComposerAdapter: ~
-    PhpOrchestra\Application\Adapter\SolutionAdapter: ~
-
+    PhpOrchestra\Application\Adapter\SolutionAdapter: 
+        arguments:
+            - '@PhpOrchestra\Application\Builder\SolutionBuilder'
+    PhpOrchestra\Application\Builder\SolutionBuilder: ~
 
         
