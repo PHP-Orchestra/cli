@@ -37,5 +37,11 @@ class AddProjectToSolutionHandler implements AddProjectToSolutionHandlerInterfac
             throw new InvalidArgumentException(sprintf('[%s] Project directory is not valid.', $this->projectWorkingDirectory));
             
         }
+
+        $this->solution->setProjects(
+            $this->projectScanner->scan($this->solution->getPath())
+        );
+
+        file_put_contents($this->solution->getFullPath(), json_encode($this->solution->toArray(), JSON_PRETTY_PRINT));
     }
 }

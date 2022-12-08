@@ -38,3 +38,28 @@ test('solution:add-project > with invalid [project-dir] parameter shows an error
     expect($this->commandTester->getDisplay())
     ->toBe('Failed to add project to the solution file. Error: [invalid dir] Project directory is not valid.' . PHP_EOL);
 });
+
+test('solution:add-project > with valid [project-dir] but no composer file does not add project', function () {
+    $orchestraSolutionFile = getTestsOutputDirectory() . '/orchestra.json';
+    $solutionContent = '{"name": "Orchestra Solution", "version": "0.1", "projects": []}';
+    file_put_contents(
+        $orchestraSolutionFile,
+         $solutionContent
+    );
+
+    $projectFolder = getTestsOutputDirectory().DIRECTORY_SEPARATOR.'project1';
+    mkdir($projectFolder);
+
+    $commandResult = $this->commandTester->execute([
+        'project-dir' => $projectFolder,
+        'working-dir' => getTestsOutputDirectory()
+    ]);
+    
+    expect($commandResult)->toBe(Command::SUCCESS);
+    
+    $fileUnderTest = json_decode(file_get_contents(getTestsOutputDirectory() . '/orchestra.json'));
+
+    expect($fileUnderTest->name)->toBe(\PhpOrchestra\Cli\Defaults::ORCHESTRA_SOLUTION_NAME_DEFAULT);
+    expect($fileUnderTest->version)->toBe(\PhpOrchestra\Cli\Defaults::ORCHESTRA_SOLUTION_VERSION);
+    expect($fileUnderTest->projects)->toBe([]);
+});
