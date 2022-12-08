@@ -33,8 +33,8 @@ class AddProjectToSolutionHandler implements AddProjectToSolutionHandlerInterfac
 
     public function handle(): void
     {
-        if (!is_file($this->solution->getFullPath())) {
-            throw new InvalidArgumentException(sprintf('[%s] solution file does not exist.', $this->solution->getFullPath()));
+        if (!is_dir($this->projectWorkingDirectory)) {
+            throw new InvalidArgumentException(sprintf('[%s] Project directory is not valid.', $this->projectWorkingDirectory));
             
         }
     }

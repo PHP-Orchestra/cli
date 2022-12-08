@@ -38,6 +38,10 @@ services:
     PhpOrchestra\Application\Adapter\SolutionAdapter: 
         arguments:
             - '@PhpOrchestra\Application\Builder\SolutionBuilder'
-    PhpOrchestra\Application\Builder\SolutionBuilder: ~
+    PhpOrchestra\Application\Builder\SolutionBuilder:
+        arguments:
+            - '@PhpOrchestra\Application\Builder\ProjectBuilder'
+    
+    PhpOrchestra\Application\Builder\ProjectBuilder: ~
 
         

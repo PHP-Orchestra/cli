@@ -54,7 +54,9 @@ class AddProjectCommand extends Command
             $solution = $this->solutionAdapter->fetch($workingDir);
             
             $this->addProjectHandler
-            ->setSolution($solution);
+            ->setSolution($solution)
+            ->setProjectWorkingDir($projectDir)
+            ->handle();
 
         } catch (\Exception $ex) {
             $output->writeln(

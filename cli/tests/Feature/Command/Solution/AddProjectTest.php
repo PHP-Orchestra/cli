@@ -15,16 +15,20 @@ afterEach(function () {
 
 test('solution:add-project > will ask for [project-dir] parameter', function () {
     $commandResult = $this->commandTester->execute([
-        'project-dir' => ''
+        'project-dir' => '',
+        'working-dir' => getTestsOutputDirectory()
     ]);
 
     expect($commandResult)->toBe(Command::FAILURE);
     expect($this->commandTester->getDisplay())
-    ->toBe('Failed to add project to the solution file. Error: [./orchestra.json] solution file does not exist.' . PHP_EOL);
+    ->toBe('Failed to add project to the solution file. Error: ['.getTestsOutputDirectory().DIRECTORY_SEPARATOR.'orchestra.json] solution file does not exist.' . PHP_EOL);
 });
 
 test('solution:add-project > with invalid [project-dir] parameter shows an error', function () {
-    file_put_contents(getTestsOutputDirectory() . '/orchestra.json', '{}');
+    file_put_contents(
+        getTestsOutputDirectory() . '/orchestra.json',
+         '{"name": "Orchestra Solution", "version": "0.1", "projects": []}'
+    );
     $commandResult = $this->commandTester->execute([
         'project-dir' => 'invalid dir',
         'working-dir' => getTestsOutputDirectory()
@@ -32,5 +36,5 @@ test('solution:add-project > with invalid [project-dir] parameter shows an error
     
     expect($commandResult)->toBe(Command::FAILURE);
     expect($this->commandTester->getDisplay())
-    ->toBe('Failed to add project to the solution file. Error: [./orchestra.json] solution file does not exist.' . PHP_EOL);
+    ->toBe('Failed to add project to the solution file. Error: [invalid dir] Project directory is not valid.' . PHP_EOL);
 });
