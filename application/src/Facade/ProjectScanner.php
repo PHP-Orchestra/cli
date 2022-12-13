@@ -5,7 +5,7 @@ namespace PhpOrchestra\Application\Facade;
 use PhpOrchestra\Application\Adapter\ComposerAdapter;
 use PhpOrchestra\Domain\Entity\Project;
 
-class ProjectScanner
+class ProjectScanner implements ProjectScannerInterface
 {
     private const EXCLUDED_DIRECTORIES = ['.', '..', 'vendor', '.git', '.vscode', '.idea'];
     private int $depthLevel = 0;
@@ -20,7 +20,7 @@ class ProjectScanner
     * This function should find all the projects starting from the orchestra.json file directory.
     * At the same point, this is a recursive function, so be aware of the returning point.
     */
-    public function scan(string $baseDir, int $depthLevel = 0)
+    public function scan(string $baseDir, int $depthLevel = 0) : array
     {
         $projectsFound = [];
 
@@ -52,7 +52,7 @@ class ProjectScanner
     /**
      * @param int $depthLevel
      */
-    public function setDepthLevel(int $depthLevel): self
+    public function setDepthLevel(int $depthLevel): ProjectScannerInterface
     {
         $this->depthLevel = $depthLevel;
 

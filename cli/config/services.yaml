@@ -16,14 +16,32 @@ services:
     PhpOrchestra\Cli\Commands\Solution\InitializeCommand:
         arguments: 
             - '@PhpOrchestra\Application\Handler\InitializeSolutionHandler'
+    
+    PhpOrchestra\Cli\Commands\Solution\AddProjectCommand:
+        arguments: 
+            - '@PhpOrchestra\Application\Handler\AddProjectToSolutionHandler'
+            - '@PhpOrchestra\Application\Adapter\SolutionAdapter'
 
     PhpOrchestra\Application\Handler\InitializeSolutionHandler:
         arguments:
           - '@PhpOrchestra\Application\Facade\ProjectScanner'
+    
+    PhpOrchestra\Application\Handler\AddProjectToSolutionHandler:
+        arguments:
+          - '@PhpOrchestra\Application\Facade\ProjectScanner'      
+    
     PhpOrchestra\Application\Facade\ProjectScanner:
         arguments:
           - '@PhpOrchestra\Application\Adapter\ComposerAdapter'
+    
     PhpOrchestra\Application\Adapter\ComposerAdapter: ~
-
+    PhpOrchestra\Application\Adapter\SolutionAdapter: 
+        arguments:
+            - '@PhpOrchestra\Application\Builder\SolutionBuilder'
+    PhpOrchestra\Application\Builder\SolutionBuilder:
+        arguments:
+            - '@PhpOrchestra\Application\Builder\ProjectBuilder'
+    
+    PhpOrchestra\Application\Builder\ProjectBuilder: ~
 
         
