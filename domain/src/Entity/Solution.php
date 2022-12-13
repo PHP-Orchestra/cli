@@ -41,7 +41,7 @@ class Solution
 
     public function addProject(Project $project): void
     {
-        $this->projects[$project->getName()] = $project;
+        $this->projects[] = $project;
     }
 
     /**
