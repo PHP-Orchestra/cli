@@ -1,0 +1,6 @@
+{
+    "chmod": "0700",
+    "stub": "bin/orchestra",
+    "main": false,
+    "output": "bin/orchestra.phar"
+}
