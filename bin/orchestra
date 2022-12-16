@@ -3,6 +3,16 @@
 if (php_sapi_name() !== 'cli') {
     exit;
 }
+// print Banner :)
+print_r(
+"    ____  __  ______     ____  ____  ________  _______________________  ___ ". PHP_EOL.
+"   / __ \/ / / / __ \   / __ \/ __ \/ ____/ / / / ____/ ___/_  __/ __ \/   |".PHP_EOL.
+"  / /_/ / /_/ / /_/ /  / / / / /_/ / /   / /_/ / __/  \__ \ / / / /_/ / /| |".PHP_EOL.
+" / ____/ __  / ____/  / /_/ / _, _/ /___/ __  / /___ ___/ // / / _, _/ ___ |".PHP_EOL.
+"/_/   /_/ /_/_/       \____/_/ |_|\____/_/ /_/_____//____//_/ /_/ |_/_/  |_|".PHP_EOL.
+"".PHP_EOL.
+"Visit > http://github.com/php-orchestra/orchestra".PHP_EOL
+);
 
 $appDirectory = __DIR__.'/../cli';
 
@@ -21,5 +31,6 @@ $loader = new YamlFileLoader(
 $loader->load('services.yaml');
 
 $containerBuilder->compile();
-
 exit($containerBuilder->get(Application::class)->run());
+
+__HALT_COMPILER();

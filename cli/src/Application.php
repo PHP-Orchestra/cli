@@ -14,4 +14,15 @@ class Application extends BaseApplication
             $this->add($command);
         }
     }
+
+    public function getName(): string
+    {
+        return 'PHP Orchestra CLI tool';
+    }
+
+    public function getVersion(): string
+    {
+        return '0.1';
+    
+    }
 }
