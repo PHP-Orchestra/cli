@@ -6,8 +6,7 @@ use PhpOrchestra\Application\Adapter\AdapterInterface;
 use PhpOrchestra\Application\Adapter\SolutionAdapter;
 use PhpOrchestra\Application\Handler\AddProjectToSolutionHandler;
 use PhpOrchestra\Application\Handler\CommandHandlerInterface;
-use PhpOrchestra\Cli\Defaults;
-use PhpOrchestra\Domain\Entity\Solution;
+use PhpOrchestra\Domain\Defaults;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -17,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand(
     name: 'solution:add-project',
     description: 'Adds a project to an existent solution'
-    )]
+)]
 class AddProjectCommand extends Command
 {
     private readonly AddProjectToSolutionHandler $addProjectHandler;
@@ -28,11 +27,10 @@ class AddProjectCommand extends Command
     public function __construct(
         CommandHandlerInterface $commandHandler,
         AdapterInterface $solutionAdapter
-        )
-    {
+    ) {
         parent::__construct();
-       $this->addProjectHandler = $commandHandler;
-       $this->solutionAdapter = $solutionAdapter; 
+        $this->addProjectHandler = $commandHandler;
+        $this->solutionAdapter = $solutionAdapter;
     }
 
     protected function configure()
@@ -48,23 +46,21 @@ class AddProjectCommand extends Command
     {
         $workingDir = $input->getArgument(Defaults::ORCHESTRA_WORKING_DIR);
         $projectDir = $input->getArgument(Defaults::ORCHESTRA_PROJECT_DIR);
-    
-        
+
         try {
             $solution = $this->solutionAdapter->fetch($workingDir);
-            
+
             $this->addProjectHandler
             ->setSolution($solution)
             ->setProjectWorkingDir($projectDir)
             ->handle();
-
         } catch (\Exception $ex) {
             $output->writeln(
                 sprintf('<error>Failed to add project to the solution file. Error: %s</error>', $ex->getMessage())
             );
             return Command::FAILURE;
         }
-                
+
         return Command::SUCCESS;
     }
 }

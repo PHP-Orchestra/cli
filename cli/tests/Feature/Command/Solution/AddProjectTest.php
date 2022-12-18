@@ -7,7 +7,7 @@ beforeEach(function () {
     // prepare folder for tests execution
     mkdir(getTestsOutputDirectory());
     $this->commandTester = new CommandTester(getApplication()->find('s:add-project'));
-    });
+});
 afterEach(function () {
     // remove folder for tests execution
     deleteDirectory(getTestsOutputDirectory());
@@ -27,13 +27,13 @@ test('solution:add-project > will ask for [project-dir] parameter', function () 
 test('solution:add-project > with invalid [project-dir] parameter shows an error', function () {
     file_put_contents(
         getTestsOutputDirectory() . '/orchestra.json',
-         '{"name": "Orchestra Solution", "version": "0.1", "projects": []}'
+        '{"name": "Orchestra Solution", "version": "0.1", "projects": []}'
     );
     $commandResult = $this->commandTester->execute([
         'project-dir' => 'invalid dir',
         'working-dir' => getTestsOutputDirectory()
     ]);
-    
+
     expect($commandResult)->toBe(Command::FAILURE);
     expect($this->commandTester->getDisplay())
     ->toBe('Failed to add project to the solution file. Error: [invalid dir] Project directory is not valid.' . PHP_EOL);
@@ -44,7 +44,7 @@ test('solution:add-project > with valid [project-dir] but no composer file does 
     $solutionContent = '{"name": "Orchestra Solution", "version": "0.1", "projects": []}';
     file_put_contents(
         $orchestraSolutionFile,
-         $solutionContent
+        $solutionContent
     );
 
     $projectFolder = getTestsOutputDirectory().DIRECTORY_SEPARATOR.'project1';
@@ -54,18 +54,17 @@ test('solution:add-project > with valid [project-dir] but no composer file does 
         'project-dir' => $projectFolder,
         'working-dir' => getTestsOutputDirectory()
     ]);
-    
+
     expect($commandResult)->toBe(Command::SUCCESS);
-    
+
     $fileUnderTest = json_decode(file_get_contents(getTestsOutputDirectory() . '/orchestra.json'));
 
-    expect($fileUnderTest->name)->toBe(\PhpOrchestra\Cli\Defaults::ORCHESTRA_SOLUTION_NAME_DEFAULT);
-    expect($fileUnderTest->version)->toBe(\PhpOrchestra\Cli\Defaults::ORCHESTRA_SOLUTION_VERSION);
+    expect($fileUnderTest->name)->toBe(\PhpOrchestra\Domain\Defaults::ORCHESTRA_SOLUTION_NAME_DEFAULT);
+    expect($fileUnderTest->version)->toBe(\PhpOrchestra\Domain\Defaults::ORCHESTRA_SOLUTION_VERSION);
     expect($fileUnderTest->projects)->toBe([]);
 });
 
-test('solution:add-project > add a project to the solution projects', function() {
-
+test('solution:add-project > add a project to the solution projects', function () {
     // Arrange
     $solutionPath = getTestsOutputDirectory().DIRECTORY_SEPARATOR . 'orchestra.json';
     $solutionContent = '
@@ -103,7 +102,7 @@ test('solution:add-project > add a project to the solution projects', function()
     expect($commandResult)->toBe(Command::SUCCESS);
 
     $subjectUnderTest = json_decode(file_get_contents($solutionPath));
-    
+
     expect($subjectUnderTest->name)->toBe('Orchestra Solution');
     expect($subjectUnderTest->version)->toBe('0.1');
     expect(count($subjectUnderTest->projects))->toBe(2);

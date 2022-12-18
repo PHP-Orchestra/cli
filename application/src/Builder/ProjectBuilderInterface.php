@@ -2,7 +2,6 @@
 namespace PhpOrchestra\Application\Builder;
 
 use PhpOrchestra\Domain\Entity\Project;
-use PhpOrchestra\Domain\External\Composer;
 
 interface ProjectBuilderInterface
 {

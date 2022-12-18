@@ -4,6 +4,7 @@ namespace PhpOrchestra\Application\Facade;
 
 use PhpOrchestra\Application\Adapter\ComposerAdapter;
 use PhpOrchestra\Domain\Entity\Project;
+use PhpOrchestra\Domain\External\Composer;
 
 class ProjectScanner implements ProjectScannerInterface
 {
@@ -61,6 +62,6 @@ class ProjectScanner implements ProjectScannerInterface
 
     private function hasComposerFile($path): bool
     {
-        return is_file(sprintf('%s%scomposer.json', $path, DIRECTORY_SEPARATOR));
+        return is_file($path . DIRECTORY_SEPARATOR . Composer::FILENAME);
     }
 }
