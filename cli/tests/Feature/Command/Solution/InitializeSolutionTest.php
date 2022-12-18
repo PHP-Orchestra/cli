@@ -1,13 +1,12 @@
 <?php
 
-use  PhpOrchestra\Application\Handler\InitializeSolutionHandler;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
 beforeEach(function () {
     // prepare folder for tests execution
     mkdir(getTestsOutputDirectory());
-    $this->commandTester = new CommandTester(getApplication()->find('s:i'));
+    $this->commandTester = new CommandTester(getApplication()->find('s:init'));
 });
 afterEach(function () {
     // remove folder for tests execution

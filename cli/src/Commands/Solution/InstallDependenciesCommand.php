@@ -3,6 +3,7 @@ namespace PhpOrchestra\Cli\Commands\Solution;
 
 use PhpOrchestra\Application\Adapter\AdapterInterface;
 use PhpOrchestra\Application\Handler\CommandHandlerInterface;
+use PhpOrchestra\Application\Handler\InstallSolutionDependenciesHandlerInterface;
 use PhpOrchestra\Domain\Defaults;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -18,7 +19,7 @@ class InstallDependenciesCommand extends Command
 {
     protected static $defaultDescription = 'Install Composer dependencies on all the projects';
 
-    private readonly InstallDependenciesHandler $installDependenciesHandler;
+    private readonly InstallSolutionDependenciesHandlerInterface $installDependenciesHandler;
     private readonly AdapterInterface $solutionAdapter;
 
     public function __construct(
