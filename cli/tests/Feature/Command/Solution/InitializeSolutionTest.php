@@ -57,8 +57,8 @@ test('solution:initialize /a/valid/dir > creates a standard file', function () {
 
     $fileUnderTest = json_decode(file_get_contents(getTestsOutputDirectory() . '/orchestra.json'));
 
-    expect($fileUnderTest->name)->toBe(\PhpOrchestra\Cli\Defaults::ORCHESTRA_SOLUTION_NAME_DEFAULT);
-    expect($fileUnderTest->version)->toBe(\PhpOrchestra\Cli\Defaults::ORCHESTRA_SOLUTION_VERSION);
+    expect($fileUnderTest->name)->toBe(\PhpOrchestra\Domain\Defaults::ORCHESTRA_SOLUTION_NAME_DEFAULT);
+    expect($fileUnderTest->version)->toBe(\PhpOrchestra\Domain\Defaults::ORCHESTRA_SOLUTION_VERSION);
     expect($fileUnderTest->projects)->toBe([]);
 });
 
@@ -76,7 +76,7 @@ test('solution:initialize /a/valid/dir --solution-name="test solution" > creates
     $fileUnderTest = json_decode(file_get_contents(getTestsOutputDirectory() . '/orchestra.json'));
 
     expect($fileUnderTest->name)->toBe('test solution');
-    expect($fileUnderTest->version)->toBe(\PhpOrchestra\Cli\Defaults::ORCHESTRA_SOLUTION_VERSION);
+    expect($fileUnderTest->version)->toBe(\PhpOrchestra\Domain\Defaults::ORCHESTRA_SOLUTION_VERSION);
     expect($fileUnderTest->projects)->toBe([]);
 });
 

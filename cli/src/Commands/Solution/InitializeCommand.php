@@ -4,8 +4,7 @@ namespace PhpOrchestra\Cli\Commands\Solution;
 
 use PhpOrchestra\Application\Handler\CommandHandlerInterface;
 use PhpOrchestra\Application\Handler\InitializeSolutionHandler;
-use PhpOrchestra\Application\Facade\ProjectScanner;
-use PhpOrchestra\Cli\Defaults;
+use PhpOrchestra\Domain\Defaults;
 use PhpOrchestra\Domain\Entity\Solution;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -34,7 +33,7 @@ class InitializeCommand extends Command
     {
         $this
             ->setHelp('Initialize a new Solution file')
-            ->addArgument(Defaults::ORCHESTRA_WORKING_DIR, InputArgument::REQUIRED, 'The directory where Orchestra will be looking to.')
+            ->addArgument(Defaults::ORCHESTRA_WORKING_DIR, InputArgument::OPTIONAL, 'The directory where your solution is at.', Defaults::ORCHESTRA_SOLUTION_WORKING_DIR_DEFAULT)
             ->addOption(Defaults::ORCHESTRA_SOLUTION_NAME_PARAMETER, 'name', InputOption::VALUE_OPTIONAL, 'The solution name of your project.', Defaults::ORCHESTRA_SOLUTION_NAME_DEFAULT)
             ->addOption(Defaults::ORCHESTRA_SCAN_FOR_PROJECTS, null, InputOption::VALUE_NONE, 'Do a scan on the root folder for projects.')
             ->addOption(Defaults::ORCHESTRA_SCAN_FOR_PROJECTS_DEPTH, null, InputOption::VALUE_OPTIONAL, 'Folder depth level for --project-scan option.', 0)

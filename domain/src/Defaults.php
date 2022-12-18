@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpOrchestra\Cli;
+namespace PhpOrchestra\Domain;
 
 final class Defaults
 {
@@ -12,6 +12,7 @@ final class Defaults
     public const ORCHESTRA_SCAN_FOR_PROJECTS_DEPTH = 'project-scan-depth';
 
     // Default values
+    public const ORCHESTRA_SOLUTION_FILENAME = 'orchestra.json';
     public const ORCHESTRA_SOLUTION_NAME_DEFAULT = 'Orchestra Solution';
     public const ORCHESTRA_SOLUTION_WORKING_DIR_DEFAULT = '.';
     public const ORCHESTRA_SOLUTION_VERSION = '0.1';

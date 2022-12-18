@@ -4,6 +4,7 @@ namespace PhpOrchestra\Domain\External;
 
 class Composer
 {
+    public const FILENAME = 'composer.json';
 
     private ?string $name;
     private ?string $description;

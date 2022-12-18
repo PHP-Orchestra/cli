@@ -3,14 +3,15 @@
 namespace PhpOrchestra\Application\Adapter;
 
 use InvalidArgumentException;
+use PhpOrchestra\Domain\Defaults;
 use PhpOrchestra\Domain\External\Composer;
 
 class ComposerAdapter implements AdapterInterface
 {
     public function fetch(string $filePath) : Composer
     {
-        if (!str_ends_with($filePath, 'composer.json')) {
-            $filePath = $filePath. DIRECTORY_SEPARATOR . 'composer.json';
+        if (!str_ends_with($filePath, Composer::FILENAME)) {
+            $filePath = $filePath. DIRECTORY_SEPARATOR . Composer::FILENAME;
         }
 
         if (!is_file($filePath)) {

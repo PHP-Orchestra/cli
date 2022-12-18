@@ -2,7 +2,6 @@
 
 namespace PhpOrchestra\Application\Adapter;
 
-use InvalidArgumentException;
 use PhpOrchestra\Application\Builder\SolutionBuilderInterface;
 
 class SolutionAdapter implements AdapterInterface
