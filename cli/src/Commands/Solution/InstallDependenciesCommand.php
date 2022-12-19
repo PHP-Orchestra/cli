@@ -43,6 +43,10 @@ class InstallDependenciesCommand extends Command
 
         try {
             $solution = $this->solutionAdapter->fetch($workingDir);
+
+            $this->installDependenciesHandler
+            ->setSolution($solution)
+            ->handle();
     
         } catch (\Exception $ex) {
             $output->writeln(
