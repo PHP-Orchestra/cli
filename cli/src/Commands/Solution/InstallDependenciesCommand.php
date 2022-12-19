@@ -47,6 +47,8 @@ class InstallDependenciesCommand extends Command
             $this->installDependenciesHandler
             ->setSolution($solution)
             ->handle();
+
+            $output->writeln(sprintf('<info>Solution dependencies are now installed.</info>'));
     
         } catch (\Exception $ex) {
             $output->writeln(

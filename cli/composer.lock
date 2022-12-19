@@ -12,7 +12,7 @@
             "dist": {
                 "type": "path",
                 "url": "../application",
-                "reference": "7925d9163b8feb816ba34007b47208195d25999a"
+                "reference": "ca5f3f859662f36cae72c6d8ee7a79332f5168f5"
             },
             "require": {
                 "php-orchestra/domain": "dev-main"
@@ -43,7 +43,7 @@
             "dist": {
                 "type": "path",
                 "url": "../domain",
-                "reference": "a5cf20fc31a1a19f57f328dda887e13f70e1bad1"
+                "reference": "1e4e27c120df04fe7d4b2f4be96218c54ecddd88"
             },
             "type": "library",
             "autoload": {
