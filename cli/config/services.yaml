@@ -42,6 +42,8 @@ services:
     
     PhpOrchestra\Application\Handler\InstallSolutionDependenciesHandler: ~
 
+    PhpOrchestra\Application\Handler\RemoveProjectFromSolutionHandler: ~
+
     PhpOrchestra\Application\Facade\ProjectScanner:
         arguments:
           - '@PhpOrchestra\Application\Adapter\ComposerAdapter'

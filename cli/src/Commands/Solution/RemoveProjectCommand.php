@@ -2,6 +2,9 @@
 
 namespace PhpOrchestra\Cli\Commands\Solution;
 
+use PhpOrchestra\Application\Adapter\AdapterInterface;
+use PhpOrchestra\Application\Handler\CommandHandlerInterface;
+use PhpOrchestra\Application\Handler\RemoveProjectFromSolutionHandlerInterface;
 use PhpOrchestra\Domain\Defaults;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -17,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class RemoveProjectCommand extends Command
 {
     protected static $defaultDescription = 'Removes a project from an existent solution.';
-    private $removeProjectHandler;
+    private readonly RemoveProjectFromSolutionHandlerInterface $removeProjectHandler;
     private readonly AdapterInterface $solutionAdapter;
 
     public function __construct(
