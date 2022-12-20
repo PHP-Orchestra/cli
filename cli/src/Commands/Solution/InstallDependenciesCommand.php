@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
     name: 'solution:install-dependencies',
-    description: 'Initialize a new Solution file.'
+    description: 'Install Composer dependencies on all the projects.'
 )]
 class InstallDependenciesCommand extends Command
 {
