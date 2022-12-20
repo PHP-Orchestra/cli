@@ -54,6 +54,8 @@ class AddProjectCommand extends Command
             ->setSolution($solution)
             ->setProjectWorkingDir($projectDir)
             ->handle();
+
+            $output->writeln(sprintf('<info>Projects from [%s] are now part of this solution</info>', $projectDir));
         } catch (\Exception $ex) {
             $output->writeln(
                 sprintf('<error>Failed to add project to the solution file. Error: %s</error>', $ex->getMessage())

@@ -21,6 +21,10 @@ services:
         arguments: 
             - '@PhpOrchestra\Application\Handler\AddProjectToSolutionHandler'
             - '@PhpOrchestra\Application\Adapter\SolutionAdapter'
+    PhpOrchestra\Cli\Commands\Solution\InstallDependenciesCommand:
+        arguments:
+            - '@PhpOrchestra\Application\Handler\InstallSolutionDependenciesHandler'
+            - '@PhpOrchestra\Application\Adapter\SolutionAdapter'
 
     PhpOrchestra\Application\Handler\InitializeSolutionHandler:
         arguments:
@@ -30,6 +34,8 @@ services:
         arguments:
           - '@PhpOrchestra\Application\Facade\ProjectScanner'      
     
+    PhpOrchestra\Application\Handler\InstallSolutionDependenciesHandler: ~
+
     PhpOrchestra\Application\Facade\ProjectScanner:
         arguments:
           - '@PhpOrchestra\Application\Adapter\ComposerAdapter'
