@@ -43,7 +43,9 @@ services:
     
     PhpOrchestra\Application\Handler\InstallSolutionDependenciesHandler: ~
 
-    PhpOrchestra\Application\Handler\RemoveProjectFromSolutionHandler: ~
+    PhpOrchestra\Application\Handler\RemoveProjectFromSolutionHandler:
+        arguments:
+            - '@PhpOrchestra\Application\Adapter\SolutionAdapter'
 
     PhpOrchestra\Application\Facade\ProjectScanner:
         arguments:

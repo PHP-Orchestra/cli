@@ -2,7 +2,6 @@
 
 namespace PhpOrchestra\Cli\Commands\Solution;
 
-use PhpOrchestra\Application\Adapter\ProjectAdapterInterface;
 use PhpOrchestra\Application\Adapter\SolutionAdapterInterface;
 use PhpOrchestra\Application\Facade\ProjectScannerInterface;
 use PhpOrchestra\Application\Handler\CommandHandlerInterface;
@@ -62,8 +61,10 @@ class RemoveProjectCommand extends Command
                 );
             }
 
-            $output->writeln($solution->getName());
-            $output->writeln(reset($scannedProjects)->getName());
+            $this->removeProjectHandler
+            ->setSolution($solution)
+            ->setProject(reset($scannedProjects))
+            ->handle();
 
         } catch (\Exception $ex) {
             $output->writeln(
