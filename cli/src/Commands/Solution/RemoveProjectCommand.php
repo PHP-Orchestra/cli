@@ -2,7 +2,9 @@
 
 namespace PhpOrchestra\Cli\Commands\Solution;
 
-use PhpOrchestra\Application\Adapter\AdapterInterface;
+use PhpOrchestra\Application\Adapter\ProjectAdapterInterface;
+use PhpOrchestra\Application\Adapter\SolutionAdapterInterface;
+use PhpOrchestra\Application\Facade\ProjectScannerInterface;
 use PhpOrchestra\Application\Handler\CommandHandlerInterface;
 use PhpOrchestra\Application\Handler\RemoveProjectFromSolutionHandlerInterface;
 use PhpOrchestra\Domain\Defaults;
@@ -21,15 +23,18 @@ class RemoveProjectCommand extends Command
 {
     protected static $defaultDescription = 'Removes a project from an existent solution.';
     private readonly RemoveProjectFromSolutionHandlerInterface $removeProjectHandler;
-    private readonly AdapterInterface $solutionAdapter;
+    private readonly SolutionAdapterInterface $solutionAdapter;
+    private readonly ProjectScannerInterface $projectScanner;
 
     public function __construct(
-            CommandHandlerInterface $commandHandler,
-        AdapterInterface $solutionAdapter
+        CommandHandlerInterface $commandHandler,
+        SolutionAdapterInterface $solutionAdapter,
+        ProjectScannerInterface $projectScanner
     ) {
         parent::__construct();
         $this->removeProjectHandler = $commandHandler;
         $this->solutionAdapter = $solutionAdapter;
+        $this->projectScanner = $projectScanner;
     }
 
     protected function configure()
@@ -49,7 +54,17 @@ class RemoveProjectCommand extends Command
 
         try {
             $solution = $this->solutionAdapter->fetch($workingDir);
+            $scannedProjects = $this->projectScanner->scan($projectDir);
+
+            if (count($scannedProjects) != 1) {
+                throw new \InvalidArgumentException(
+                    sprintf('Invalid project directory [%s]. Please provide the specific project directory.', $projectDir)
+                );
+            }
+
             $output->writeln($solution->getName());
+            $output->writeln(reset($scannedProjects)->getName());
+
         } catch (\Exception $ex) {
             $output->writeln(
                     sprintf('<error>Failed to add project to the solution file. Error: %s</error>', $ex->getMessage())

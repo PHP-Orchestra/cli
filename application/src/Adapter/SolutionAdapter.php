@@ -4,7 +4,7 @@ namespace PhpOrchestra\Application\Adapter;
 
 use PhpOrchestra\Application\Builder\SolutionBuilderInterface;
 
-class SolutionAdapter implements AdapterInterface
+class SolutionAdapter implements SolutionAdapterInterface
 {
     private SolutionBuilderInterface $solutionBuilder;
 
