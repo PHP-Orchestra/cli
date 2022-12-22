@@ -13,6 +13,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 #[AsCommand(
         name: 'solution:remove-project',
@@ -50,8 +51,18 @@ class RemoveProjectCommand extends Command
     {
         $workingDir = $input->getArgument(Defaults::ORCHESTRA_WORKING_DIR);
         $projectDir = $input->getArgument(Defaults::ORCHESTRA_PROJECT_DIR);
+        $doDeleteFiles = $input->getOption(Defaults::ORCHESTRA_DELETE_FILES);
 
         try {
+            if ($doDeleteFiles) {
+                $helper = $this->getHelper('question');
+                $question = new ConfirmationQuestion('Removing a project is a destructive action. Do you want to proceed? (y/N)', false);
+
+            if ($helper->ask($input, $output, $question)) {
+                die('ACEITE');
+                return Command::SUCCESS;
+            }
+            }
             $solution = $this->solutionAdapter->fetch($workingDir);
             $scannedProjects = $this->projectScanner->scan($projectDir);
 
@@ -61,10 +72,15 @@ class RemoveProjectCommand extends Command
                 );
             }
 
+            $projectToRemove = reset($scannedProjects);
+
             $this->removeProjectHandler
             ->setSolution($solution)
-            ->setProject(reset($scannedProjects))
+            ->setProject($projectToRemove)
+            ->doDeleteFiles(false)
             ->handle();
+
+            $output->writeln(sprintf('<info>The project [%s], was removed from the solution.</info>', $projectToRemove->getName()));
 
         } catch (\Exception $ex) {
             $output->writeln(
