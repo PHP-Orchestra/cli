@@ -52,17 +52,18 @@ class RemoveProjectCommand extends Command
         $workingDir = $input->getArgument(Defaults::ORCHESTRA_WORKING_DIR);
         $projectDir = $input->getArgument(Defaults::ORCHESTRA_PROJECT_DIR);
         $doDeleteFiles = $input->getOption(Defaults::ORCHESTRA_DELETE_FILES);
+        $isDeleteFiles = false;
 
         try {
             if ($doDeleteFiles) {
                 $helper = $this->getHelper('question');
                 $question = new ConfirmationQuestion('Removing a project is a destructive action. Do you want to proceed? (y/N)', false);
 
-            if ($helper->ask($input, $output, $question)) {
-                die('ACEITE');
-                return Command::SUCCESS;
+                if ($helper->ask($input, $output, $question)) {
+                    $isDeleteFiles = true;
+                }
             }
-            }
+
             $solution = $this->solutionAdapter->fetch($workingDir);
             $scannedProjects = $this->projectScanner->scan($projectDir);
 
@@ -77,7 +78,7 @@ class RemoveProjectCommand extends Command
             $this->removeProjectHandler
             ->setSolution($solution)
             ->setProject($projectToRemove)
-            ->doDeleteFiles(false)
+            ->doDeleteFiles($isDeleteFiles)
             ->handle();
 
             $output->writeln(sprintf('<info>The project [%s], was removed from the solution.</info>', $projectToRemove->getName()));
