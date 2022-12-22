@@ -45,7 +45,7 @@ class ProjectScanner implements ProjectScannerInterface
 
         // scan the $baseDir
         if ($this->hasComposerFile($baseDir)) {
-            $projectsFound[] = $this->createProject($baseDir . DIRECTORY_SEPARATOR . Composer::FILENAME);
+            $projectsFound[] = $this->createProject($baseDir);
         }
 
         return $projectsFound;

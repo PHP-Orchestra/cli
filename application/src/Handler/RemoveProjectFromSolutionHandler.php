@@ -64,7 +64,7 @@ class RemoveProjectFromSolutionHandler implements RemoveProjectFromSolutionHandl
                 continue;
             }
     
-            if (!deleteDirectory($dir . DIRECTORY_SEPARATOR . $item)) {
+            if (!$this->deleteDirectory($dir . DIRECTORY_SEPARATOR . $item)) {
                 return false;
             }
         }
