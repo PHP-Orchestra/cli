@@ -58,6 +58,14 @@ class Solution
         return $this->projects;
     }
 
+    public function removeProject(Project $project) {
+        foreach($this->projects as $index => $p) {
+            if($p->getName() === $project->getName()) {
+                unset($this->projects[$index]);
+            }
+        }
+    }
+
     public function toArray(): array
     {
         return [

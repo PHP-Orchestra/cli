@@ -2,8 +2,7 @@
 
 namespace PhpOrchestra\Cli\Commands\Solution;
 
-use PhpOrchestra\Application\Adapter\AdapterInterface;
-use PhpOrchestra\Application\Adapter\SolutionAdapter;
+use PhpOrchestra\Application\Adapter\SolutionAdapterInterface;
 use PhpOrchestra\Application\Handler\AddProjectToSolutionHandler;
 use PhpOrchestra\Application\Handler\CommandHandlerInterface;
 use PhpOrchestra\Domain\Defaults;
@@ -20,13 +19,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 class AddProjectCommand extends Command
 {
     private readonly AddProjectToSolutionHandler $addProjectHandler;
-    private readonly AdapterInterface $solutionAdapter;
+    private readonly SolutionAdapterInterface $solutionAdapter;
 
     protected static $defaultDescription = 'Adds a project to an existent solution';
 
     public function __construct(
         CommandHandlerInterface $commandHandler,
-        AdapterInterface $solutionAdapter
+        SolutionAdapterInterface $solutionAdapter
     ) {
         parent::__construct();
         $this->addProjectHandler = $commandHandler;

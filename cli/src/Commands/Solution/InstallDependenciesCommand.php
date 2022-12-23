@@ -1,7 +1,7 @@
 <?php
 namespace PhpOrchestra\Cli\Commands\Solution;
 
-use PhpOrchestra\Application\Adapter\AdapterInterface;
+use PhpOrchestra\Application\Adapter\SolutionAdapterInterface;
 use PhpOrchestra\Application\Handler\CommandHandlerInterface;
 use PhpOrchestra\Application\Handler\InstallSolutionDependenciesHandlerInterface;
 use PhpOrchestra\Domain\Defaults;
@@ -20,11 +20,11 @@ class InstallDependenciesCommand extends Command
     protected static $defaultDescription = 'Install Composer dependencies on all the projects';
 
     private readonly InstallSolutionDependenciesHandlerInterface $installDependenciesHandler;
-    private readonly AdapterInterface $solutionAdapter;
+    private readonly SolutionAdapterInterface $solutionAdapter;
 
     public function __construct(
         CommandHandlerInterface $commandHandler,
-        AdapterInterface $solutionAdapter
+        SolutionAdapterInterface $solutionAdapter
     ) {
         parent::__construct();
         $this->installDependenciesHandler = $commandHandler;

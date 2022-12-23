@@ -3,8 +3,9 @@
 namespace PhpOrchestra\Application\Adapter;
 
 use PhpOrchestra\Application\Builder\SolutionBuilderInterface;
+use PhpOrchestra\Domain\Entity\Solution;
 
-class SolutionAdapter implements AdapterInterface
+class SolutionAdapter implements SolutionAdapterInterface
 {
     private SolutionBuilderInterface $solutionBuilder;
 
@@ -23,5 +24,10 @@ class SolutionAdapter implements AdapterInterface
         return $solutionEntity;
 
 
+    }
+
+    public function save(Solution $solution): void
+    {
+        file_put_contents($solution->getFullPath(), json_encode($solution->toArray(), JSON_PRETTY_PRINT));
     }
 }

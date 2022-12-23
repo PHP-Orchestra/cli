@@ -25,6 +25,7 @@ class ProjectScanner implements ProjectScannerInterface
     {
         $projectsFound = [];
 
+        // scan at $baseDir directories
         if ($this->depthLevel >= $depthLevel) {
             $allFiles = scandir($baseDir);
 
@@ -33,18 +34,18 @@ class ProjectScanner implements ProjectScannerInterface
 
                 if (is_dir($currentDirectory) && !in_array($directoryItem, self::EXCLUDED_DIRECTORIES)) {
                     if ($this->hasComposerFile($currentDirectory)) {
-                        $composerEntity = $this->composerAdapter->fetch($currentDirectory);
-                        
-                        // create Project entity and return
-                        $project = (new Project())
-                        ->setName($composerEntity->getName())
-                        ->setPath($currentDirectory);
+                        $project = $this->createProject($currentDirectory);
                         $projectsFound[] = $project;
                     } else {
                         $projectsFound = array_merge($projectsFound, $this->scan($currentDirectory, ++$depthLevel));
                     }
                 }
             }
+        }
+
+        // scan the $baseDir
+        if ($this->hasComposerFile($baseDir)) {
+            $projectsFound[] = $this->createProject($baseDir);
         }
 
         return $projectsFound;
@@ -63,5 +64,17 @@ class ProjectScanner implements ProjectScannerInterface
     private function hasComposerFile($path): bool
     {
         return is_file($path . DIRECTORY_SEPARATOR . Composer::FILENAME);
+    }
+
+    private function createProject($composerFilePath)
+    {
+        $composerEntity = $this->composerAdapter->fetch($composerFilePath);
+                        
+        // create Project entity and return
+        $project = (new Project())
+        ->setName($composerEntity->getName())
+        ->setPath($composerFilePath);
+
+        return $project;
     }
 }
