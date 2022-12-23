@@ -3,6 +3,7 @@
 namespace PhpOrchestra\Application\Handler;
 
 use InvalidArgumentException;
+use PhpOrchestra\Application\Adapter\SolutionAdapterInterface;
 use PhpOrchestra\Application\Facade\ProjectScanner;
 use PhpOrchestra\Domain\Entity\Solution;
 
@@ -11,11 +12,13 @@ class InitializeSolutionHandler implements CommandHandlerInterface
     private readonly Solution $solution;
     private bool $isScanforProjects = false;
 
-    private ProjectScanner $projectScanner;
+    private readonly ProjectScanner $projectScanner;
+    private readonly SolutionAdapterInterface $solutionAdapter;
 
-    public function __construct(ProjectScanner $projectScanner)
+    public function __construct(ProjectScanner $projectScanner, SolutionAdapterInterface $solutionAdapter)
     {
         $this->projectScanner = $projectScanner;
+        $this->solutionAdapter = $solutionAdapter;
     }
 
     public function setSolution(Solution $solution): self
@@ -49,6 +52,6 @@ class InitializeSolutionHandler implements CommandHandlerInterface
             );
         }
 
-        file_put_contents($this->solution->getFullPath(), json_encode($this->solution->toArray(), JSON_PRETTY_PRINT));
+        $this->solutionAdapter->save($this->solution);
     }
 }

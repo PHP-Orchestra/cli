@@ -36,10 +36,12 @@ services:
     PhpOrchestra\Application\Handler\InitializeSolutionHandler:
         arguments:
           - '@PhpOrchestra\Application\Facade\ProjectScanner'
+          - '@PhpOrchestra\Application\Adapter\SolutionAdapter'
     
     PhpOrchestra\Application\Handler\AddProjectToSolutionHandler:
         arguments:
-          - '@PhpOrchestra\Application\Facade\ProjectScanner'      
+          - '@PhpOrchestra\Application\Facade\ProjectScanner'
+          - '@PhpOrchestra\Application\Adapter\SolutionAdapter'    
     
     PhpOrchestra\Application\Handler\InstallSolutionDependenciesHandler: ~
 

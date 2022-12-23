@@ -2,6 +2,7 @@
 namespace PhpOrchestra\Application\Handler;
 
 use InvalidArgumentException;
+use PhpOrchestra\Application\Adapter\SolutionAdapterInterface;
 use PhpOrchestra\Application\Facade\ProjectScannerInterface;
 use PhpOrchestra\Domain\Entity\Solution;
 
@@ -10,11 +11,13 @@ class AddProjectToSolutionHandler implements AddProjectToSolutionHandlerInterfac
     private readonly Solution $solution;
 
     private ProjectScannerInterface $projectScanner;
+    private readonly SolutionAdapterInterface $solutionAdapter;
     private string $projectWorkingDirectory;
 
-    public function __construct(ProjectScannerInterface $projectScanner)
+    public function __construct(ProjectScannerInterface $projectScanner, SolutionAdapterInterface $solutionAdapter)
     {
         $this->projectScanner = $projectScanner;
+        $this->solutionAdapter = $solutionAdapter;
     }
 
     public function setProjectWorkingDir(string $path): AddProjectToSolutionHandlerInterface
@@ -42,6 +45,6 @@ class AddProjectToSolutionHandler implements AddProjectToSolutionHandlerInterfac
         $this->solution->addProject($project);
         }
 
-        file_put_contents($this->solution->getFullPath(), json_encode($this->solution->toArray(), JSON_PRETTY_PRINT));
+        $this->solutionAdapter->save($this->solution);
     }
 }
