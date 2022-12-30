@@ -15,8 +15,23 @@ print_r(
 );
 
 $appDirectory = __DIR__.'/../cli';
+$useRequire = true;
+if (class_exists('Phar')) {
+    // Maybe this file is used as phar-stub? Let's try!
+    try {
+        var_dump(__FILE__ . PHP_EOL);
+        Phar::mapPhar(__FILE__);
 
-require $appDirectory . '/vendor/autoload.php';
+        require_once 'phar://'. __FILE__ .'/cli/vendor/autoload.php';
+        $useRequire = false;
+    } catch (PharException $e) {
+    }
+}
+if ($useRequire) {
+    die('on require');
+    require $appDirectory . '/vendor/autoload.php';
+}
+
 
 use PhpOrchestra\Cli\Application;
 use Symfony\Component\Config\FileLocator;
@@ -26,7 +41,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 $containerBuilder = new ContainerBuilder();
 $loader = new YamlFileLoader(
     $containerBuilder, 
-    new FileLocator($appDirectory . '/config')
+    new FileLocator('phar://'. __FILE__ .'/cli/config')
 );
 $loader->load('services.yaml');
 
