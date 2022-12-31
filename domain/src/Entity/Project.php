@@ -6,6 +6,7 @@ class Project
 {
     public readonly string $name;
     public readonly string $path;
+    public readonly array $dependencies;
 
     /**
      * @param string $name
@@ -35,5 +36,29 @@ class Project
     public function getPath(): string
     {
         return $this->path;
+    }
+
+    public function getDependencies() : array
+    {
+        return $this->dependencies;
+    }
+
+    public function addDependency(Project $project): self
+    {
+        if (!$this->hasDependency($project)) {
+            $this->dependencies[] = $project;
+        }
+
+        return $this;
+    }
+
+    private function hasDependency(Project $project) : bool
+    {
+        foreach ($this->dependencies as $existentProject) {
+            if ($existentProject->getName() === $project->getName()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
