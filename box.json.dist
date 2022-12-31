@@ -2,10 +2,10 @@
     "chmod": "0700",
     "compactors": [
         "KevinGH\\Box\\Compactor\\Php",
-        "KevinGH\\Box\\Compactor\\PhpScoper",
         "KevinGH\\Box\\Compactor\\Json"
     ],
     "directories": ["./cli", "./application", "./domain"],
+    "blacklist": ["tests"],
     "stub": "bin/orchestra",
     "main": false,
     "output": "bin/orchestra.phar"

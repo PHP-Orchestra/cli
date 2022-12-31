@@ -5,7 +5,9 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "PhpOrchestra\\Cli\\": "src/"
+            "PhpOrchestra\\Cli\\": "src/",
+            "PhpOrchestra\\Application\\": "../application/src/",
+            "PhpOrchestra\\Domain\\": "../domain/src/"
         }
     },
     "authors": [
@@ -17,27 +19,16 @@
     "minimum-stability": "dev",
     "require": {
         "php": "^8.1",
-        "php-orchestra/domain": "dev-main",
-        "php-orchestra/application": "dev-main",
         "symfony/console": "^6.2",
         "symfony/dependency-injection": "^6.2",
         "symfony/config": "^6.2",
-        "symfony/yaml": "^6.2"
+        "symfony/yaml": "^6.2",
+        "symfony/finder": "^6.2"
         
     },
     "require-dev": {
         "pestphp/pest": "^2"
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../application"
-        },
-        {
-            "type": "path",
-            "url": "../domain"
-        }
-    ],
     "config": {
         "allow-plugins": {
             "pestphp/pest-plugin": true
