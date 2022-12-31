@@ -1,0 +1,14 @@
+{
+    "name": "php-orchestra/orchestra",
+    "description": "PHP Project Orchestrator",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rudi Rocha",
+            "email": "rudi.rocha@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "bin": ["bin/orchestra"]
+}
