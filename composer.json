@@ -10,5 +10,6 @@
     ],
     "minimum-stability": "dev",
     "require": {},
+    "version": "0.1.2",
     "bin": ["bin/orchestra"]
 }
