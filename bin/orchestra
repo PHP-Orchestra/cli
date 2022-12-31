@@ -11,27 +11,28 @@ print_r(
 " / ____/ __  / ____/  / /_/ / _, _/ /___/ __  / /___ ___/ // / / _, _/ ___ |".PHP_EOL.
 "/_/   /_/ /_/_/       \____/_/ |_|\____/_/ /_/_____//____//_/ /_/ |_/_/  |_|".PHP_EOL.
 "".PHP_EOL.
-"Visit > http://github.com/php-orchestra/orchestra".PHP_EOL
-);
+"Visit > http://github.com/php-orchestra/orchestra".PHP_EOL.
+"Documentation > https://php-orchestra.github.io/docs/" . PHP_EOL.
+PHP_EOL);
 
 $appDirectory = __DIR__.'/../cli';
-$useRequire = true;
-if (class_exists('Phar')) {
-    // Maybe this file is used as phar-stub? Let's try!
-    try {
-        var_dump(__FILE__ . PHP_EOL);
-        Phar::mapPhar(__FILE__);
 
-        require_once 'phar://'. __FILE__ .'/cli/vendor/autoload.php';
-        $useRequire = false;
+// is PHAR or php-script logic, based on PHP-CS-FIXER (https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/blob/master/php-cs-fixer)
+$doRequire = true;
+if (class_exists('Phar')) {
+    try {
+        Phar::mapPhar(__FILE__);
+        $pharDirectory = 'phar://'. __FILE__ .'/cli' ;
+        require_once $pharDirectory . '/vendor/autoload.php';
+        $doRequire = false; 
+        $appDirectory = $pharDirectory;
     } catch (PharException $e) {
+        // It's not phar execution
     }
 }
-if ($useRequire) {
-    die('on require');
+if ($doRequire) {
     require $appDirectory . '/vendor/autoload.php';
 }
-
 
 use PhpOrchestra\Cli\Application;
 use Symfony\Component\Config\FileLocator;
@@ -41,7 +42,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 $containerBuilder = new ContainerBuilder();
 $loader = new YamlFileLoader(
     $containerBuilder, 
-    new FileLocator('phar://'. __FILE__ .'/cli/config')
+    new FileLocator($appDirectory. '/config')
 );
 $loader->load('services.yaml');
 
