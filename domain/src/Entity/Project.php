@@ -6,6 +6,7 @@ class Project
 {
     public readonly string $name;
     public readonly string $path;
+    public readonly array $referencedProjects;
 
     /**
      * @param string $name
@@ -35,5 +36,11 @@ class Project
     public function getPath(): string
     {
         return $this->path;
+    }
+
+    public function setReferencedProjects($projects): self
+    {
+        $this->referencedProjects = $projects;
+        return $this;
     }
 }
