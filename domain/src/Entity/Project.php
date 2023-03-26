@@ -6,7 +6,7 @@ class Project
 {
     public readonly string $name;
     public readonly string $path;
-    public readonly array $referencedProjects;
+    public array $referencedProjects = [];
 
     /**
      * @param string $name
@@ -42,5 +42,21 @@ class Project
     {
         $this->referencedProjects = $projects;
         return $this;
+    }
+
+    public function getReferencedProjects(): array
+    {
+        return $this->referencedProjects;
+    }
+
+    public function addReferencedProject(Project $project): self
+    {
+        $this->referencedProjects[] = $project;
+        return $this;
+    }
+
+    public function hasReferencedProject(Project $project): bool
+    {
+        return in_array($project, $this->referencedProjects);
     }
 }
