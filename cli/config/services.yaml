@@ -12,6 +12,12 @@ services:
     PhpOrchestra\Cli\Application: 
         arguments:
             - !tagged command
+
+    PhpOrchestra\Cli\Commands\Project\AddReferenceCommand:
+        arguments:
+            - '@PhpOrchestra\Application\Adapter\SolutionAdapter'
+            - '@PhpOrchestra\Application\Facade\ProjectScanner'
+            - '@PhpOrchestra\Application\Handler\AddProjectReferenceHandler'
     
     PhpOrchestra\Cli\Commands\Solution\InitializeCommand:
         arguments: 
@@ -48,6 +54,8 @@ services:
     PhpOrchestra\Application\Handler\RemoveProjectFromSolutionHandler:
         arguments:
             - '@PhpOrchestra\Application\Adapter\SolutionAdapter'
+
+    PhpOrchestra\Application\Handler\AddProjectReferenceHandler: ~
 
     PhpOrchestra\Application\Facade\ProjectScanner:
         arguments:
