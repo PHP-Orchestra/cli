@@ -2,17 +2,26 @@
 
 namespace PhpOrchestra\Domain\External;
 
+use JsonSerializable;
 use PhpOrchestra\Domain\External\Composer\Repository;
 
-class Composer
+class Composer implements JsonSerializable
 {
     public const FILENAME = 'composer.json';
 
+    private ?string $folderPath;
     private ?string $name;
     private ?string $description;
     private ?string $type;
     private ?array $autoload = [];
     private ?array $repositories = [];
+
+    public string $cenas = 'coisas';
+
+    public function __construct(?string $folderPath = null)
+    {
+        $this->folderPath = $folderPath;
+    }
 
     public function load(array $data)
     {
@@ -51,6 +60,46 @@ class Composer
     public function getAutoLoad()
     {
         return $this->autoload;
+    }
+
+    public function getFolderPath(): ?string
+    {
+        return $this->folderPath;
+    }
+
+    public function psr4Contains(String $namespace) : bool
+    {
+        
+        foreach($this->autoload[PSR4::class] as $entry)
+        {
+            if ($entry->getNamespacePrefix() == $namespace) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function addPsr4Entry($namespacePrefix, $folderPath)
+    {
+        $this->autoload[PSR4::class][$namespacePrefix] = $folderPath;
+    }
+
+    public function getSrcPsr4Namespace() : string
+    {
+        foreach($this->autoload[PSR4::class] as $entry)
+        {
+            if ($entry->getPath() === 'src/')
+            {
+                return $entry->getNamespacePrefix();
+            }
+        }
+        return null;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        // TODO: serialize the composer entity object
     }
 
     private function parseAutoLoad($autoloadPayload) : void

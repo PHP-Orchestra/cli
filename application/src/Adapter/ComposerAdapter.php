@@ -24,9 +24,20 @@ class ComposerAdapter implements AdapterInterface
             throw new \Exception(sprintf('Composer file [%s] has no name attribute', $filePath));
         }
 
-        $composerEntity = new Composer();
+        $composerEntity = new Composer($filePath);
         $composerEntity->load($composerData);
 
         return $composerEntity;
+    }
+
+    public function save(Composer $composerEntity) 
+    {
+        if (null === $composerEntity->getFolderPath()) {
+            throw new \Exception('Composer instance is missing the folder path');
+        }
+        $filePath = $composerEntity->getFolderPath();
+        file_put_contents($filePath, $composerEntity);
+        die($composerEntity->getName());
+        
     }
 }

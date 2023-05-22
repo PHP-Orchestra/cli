@@ -22,4 +22,9 @@ class PSR4 extends PHPStandard
     {
         return $this->path;
     }
+
+    public function __toString() : string
+    {
+        return 'psr-4';
+    }
 }
