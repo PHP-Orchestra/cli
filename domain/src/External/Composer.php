@@ -2,10 +2,9 @@
 
 namespace PhpOrchestra\Domain\External;
 
-use JsonSerializable;
 use PhpOrchestra\Domain\External\Composer\Repository;
 
-class Composer implements JsonSerializable
+class Composer
 {
     public const FILENAME = 'composer.json';
 
@@ -15,6 +14,7 @@ class Composer implements JsonSerializable
     private ?string $type;
     private ?array $autoload = [];
     private ?array $repositories = [];
+    private ?array $payload = [];
 
     public string $cenas = 'coisas';
 
@@ -25,12 +25,16 @@ class Composer implements JsonSerializable
 
     public function load(array $data)
     {
-        $this->name = $data['name'];
+        
+       /* $this->name = $data['name'];
         $this->description = $data['description'] ?? '';
         $this->type = $data['type'] ?? '' ;
         
         $this->parseAutoLoad($data['autoload']);
         $this->parseRepositories($data['repositories'] ?? []);
+        */
+
+        $this->payload = $data;
     }
 
     /**
@@ -38,7 +42,7 @@ class Composer implements JsonSerializable
      */
     public function getName()
     {
-        return $this->name;
+        return $this->payload['name'];
     }
 
     /**
@@ -70,9 +74,9 @@ class Composer implements JsonSerializable
     public function psr4Contains(String $namespace) : bool
     {
         
-        foreach($this->autoload[PSR4::class] as $entry)
+        foreach($this->payload['autoload'][PSR4::toString()] as $entry => $path)
         {
-            if ($entry->getNamespacePrefix() == $namespace) {
+            if ($entry == $namespace) {
                 return true;
             }
         }
@@ -82,24 +86,24 @@ class Composer implements JsonSerializable
 
     public function addPsr4Entry($namespacePrefix, $folderPath)
     {
-        $this->autoload[PSR4::class][$namespacePrefix] = $folderPath;
+        $this->payload['autoload'][PSR4::toString()][$namespacePrefix] = $folderPath;
     }
 
     public function getSrcPsr4Namespace() : string
     {
-        foreach($this->autoload[PSR4::class] as $entry)
+        foreach($this->payload['autoload'][PSR4::toString()] as $entry => $path)
         {
-            if ($entry->getPath() === 'src/')
+            if ($path === 'src/')
             {
-                return $entry->getNamespacePrefix();
+                return $entry;
             }
         }
         return null;
     }
 
-    public function jsonSerialize(): mixed
+    public function getPayload()
     {
-        // TODO: serialize the composer entity object
+        return $this->payload;
     }
 
     private function parseAutoLoad($autoloadPayload) : void

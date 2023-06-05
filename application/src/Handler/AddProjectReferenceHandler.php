@@ -83,7 +83,12 @@ class AddProjectReferenceHandler implements AddProjectReferenceHandlerInterface
             );
         }
 
-        $targetComposer->addPsr4Entry('namespacePrefix', 'path');
+        $targetComposer->addPsr4Entry(
+            $sourceComposer->getSrcPsr4Namespace(),
+            $this->calculateRelativePath(
+                $this->workingProject->getPath(),
+                 $this->projectToReference->getPath(). 'src')
+        );
         $this->composerAdapter->save($targetComposer);
         die($this->projectToReference->getPath());
         // validate project to add the reference, has it or not
@@ -93,4 +98,43 @@ class AddProjectReferenceHandler implements AddProjectReferenceHandlerInterface
         // 2. Add dependency
         
     }
+
+    public function calculateRelativePath($fromFolder, $toFolder)
+{
+    var_dump($fromFolder, $toFolder);
+    // Normalize the folder paths
+    $fromFolder = str_replace(rtrim($fromFolder, DIRECTORY_SEPARATOR)) . DIRECTORY_SEPARATOR;
+    $toFolder = rtrim($toFolder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+    
+    // Convert paths to arrays of folders
+    $fromFolders = explode(DIRECTORY_SEPARATOR, $fromFolder);
+    $toFolders = explode(DIRECTORY_SEPARATOR, $toFolder);
+    var_dump($fromFolders);
+    // Remove any common folders from the beginning of the paths
+    while (count($fromFolders) > 0 && count($toFolders) > 0 && $fromFolders[0] === $toFolders[0]) {
+        array_shift($fromFolders);
+        array_shift($toFolders);
+    }
+    
+    // Calculate the relative path
+    $relativePath = '';
+    
+    // Add "../" for each folder in the source path
+    foreach ($fromFolders as $folder) {
+        $relativePath .= '../';
+    }
+    
+    // Add the remaining folders from the target path
+    $relativePath .= implode('/', $toFolders);
+    
+    // If the relative path is empty, set it to './' to represent the current directory
+    if (empty($relativePath)) {
+        $relativePath = './';
+    }
+    var_dump($relativePath);
+    return $relativePath;
+    
+    return $relativePath;
+}
+
 }

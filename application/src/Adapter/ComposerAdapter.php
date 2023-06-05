@@ -36,7 +36,7 @@ class ComposerAdapter implements AdapterInterface
             throw new \Exception('Composer instance is missing the folder path');
         }
         $filePath = $composerEntity->getFolderPath();
-        file_put_contents($filePath, $composerEntity);
+        file_put_contents($filePath, json_encode($composerEntity->getPayload(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ));
         die($composerEntity->getName());
         
     }
