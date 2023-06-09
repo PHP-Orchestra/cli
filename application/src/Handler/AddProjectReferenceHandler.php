@@ -72,8 +72,8 @@ class AddProjectReferenceHandler implements AddProjectReferenceHandlerInterface
         $sourceComposer = $this->composerAdapter->fetch(
             $this->projectToReference->getPath()
         );
-        // TODO: remove not condition
-        if (!$targetComposer->psr4Contains($sourceComposer->getSrcPsr4Namespace())) {
+        
+        if ($targetComposer->psr4Contains($sourceComposer->getSrcPsr4Namespace())) {
             throw new InvalidArgumentException(
                 sprintf(
                     "The composer project [%s] has already a PSR4 reference to the composer project [%s]",
@@ -90,26 +90,19 @@ class AddProjectReferenceHandler implements AddProjectReferenceHandlerInterface
                  $this->projectToReference->getPath(). 'src')
         );
         $this->composerAdapter->save($targetComposer);
-        die($this->projectToReference->getPath());
-        // validate project to add the reference, has it or not
-
-        // do the composer management
-        // 1. Add folder path as repository
-        // 2. Add dependency
         
     }
 
     public function calculateRelativePath($fromFolder, $toFolder)
 {
-    var_dump($fromFolder, $toFolder);
     // Normalize the folder paths
-    $fromFolder = str_replace(rtrim($fromFolder, DIRECTORY_SEPARATOR)) . DIRECTORY_SEPARATOR;
+    $fromFolder = rtrim($fromFolder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     $toFolder = rtrim($toFolder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     
     // Convert paths to arrays of folders
     $fromFolders = explode(DIRECTORY_SEPARATOR, $fromFolder);
     $toFolders = explode(DIRECTORY_SEPARATOR, $toFolder);
-    var_dump($fromFolders);
+
     // Remove any common folders from the beginning of the paths
     while (count($fromFolders) > 0 && count($toFolders) > 0 && $fromFolders[0] === $toFolders[0]) {
         array_shift($fromFolders);
@@ -121,6 +114,7 @@ class AddProjectReferenceHandler implements AddProjectReferenceHandlerInterface
     
     // Add "../" for each folder in the source path
     foreach ($fromFolders as $folder) {
+        if (empty($folder)) continue;
         $relativePath .= '../';
     }
     
@@ -131,8 +125,6 @@ class AddProjectReferenceHandler implements AddProjectReferenceHandlerInterface
     if (empty($relativePath)) {
         $relativePath = './';
     }
-    var_dump($relativePath);
-    return $relativePath;
     
     return $relativePath;
 }
