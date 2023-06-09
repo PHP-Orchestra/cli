@@ -6,7 +6,7 @@
     "autoload": {
         "psr-4": {
             "PhpOrchestra\\Cli\\": "src/",
-            "PhpOrchestra\\Application\\": "../../application/src/",
+            "PhpOrchestra\\Application\\": "../application/src/",
             "PhpOrchestra\\Domain\\": "../domain/src/"
         }
     },
