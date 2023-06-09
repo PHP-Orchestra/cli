@@ -61,6 +61,11 @@ class AddReferenceCommand extends Command
             ->setWorkingProject($workingProject)
             ->setSolution($solution)
             ->handle();
+
+            $output->writeln(
+                sprintf('<info>Project [%s] is now available in the [%s] project.</info>', $referencedProject->getName(), $workingProject->getName())
+            );
+
         return Command::SUCCESS;
     }
 
