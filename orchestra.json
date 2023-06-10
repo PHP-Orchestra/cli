@@ -3,16 +3,22 @@
     "version": "0.1",
     "projects": [
         {
-            "name": "php-orchestra\/application",
-            "path": ".\/application"
+            "name": "php-orchestra/application",
+            "path": "./application"
         },
         {
-            "name": "php-orchestra\/cli",
-            "path": ".\/cli"
+            "name": "php-orchestra/domain",
+            "path": "./domain"
         },
         {
-            "name": "php-orchestra\/domain",
-            "path": ".\/domain"
+            "name": "php-orchestra/cli",
+            "path": ".\\cli",
+            "referencedProjects": [
+                {
+                    "name": "php-orchestra/application",
+                    "path": ".\\application"
+                }
+            ]
         }
     ]
 }
