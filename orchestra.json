@@ -12,11 +12,11 @@
         },
         {
             "name": "php-orchestra/cli",
-            "path": ".\\cli",
+            "path": "./cli/",
             "referencedProjects": [
                 {
                     "name": "php-orchestra/application",
-                    "path": ".\\application"
+                    "path": "./application/"
                 }
             ]
         }

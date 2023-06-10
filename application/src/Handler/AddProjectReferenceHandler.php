@@ -80,7 +80,7 @@ class AddProjectReferenceHandler implements AddProjectReferenceHandlerInterface
             $this->projectToReference->getPath()
         );
 
-        if (!$targetComposer->psr4Contains($sourceComposer->getSrcPsr4Namespace())) {
+        if ($targetComposer->psr4Contains($sourceComposer->getSrcPsr4Namespace())) {
             throw new InvalidArgumentException(
                 sprintf(
                     "The composer project [%s] has already a PSR4 reference to the composer project [%s]",
