@@ -24,7 +24,6 @@
         "symfony/config": "^6.3",
         "symfony/yaml": "^6.3",
         "symfony/finder": "^6.3"
-        
     },
     "require-dev": {
         "pestphp/pest": "^2"
@@ -35,7 +34,7 @@
         }
     },
     "scripts": {
-        "test" : [
+        "test": [
             "./vendor/bin/pest"
         ]
     }

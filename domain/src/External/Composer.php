@@ -2,19 +2,19 @@
 
 namespace PhpOrchestra\Domain\External;
 
+use PhpOrchestra\Domain\External\Composer\Repository;
+
 class Composer
 {
     public const FILENAME = 'composer.json';
 
-    private ?string $name;
-    private ?string $description;
-    private ?string $type;
+    private ?string $folderPath;
+    private ?array $payload = [];
 
-    public function load(array $data)
+    public function __construct(string $folderPath, $data)
     {
-        $this->name = $data['name'];
-        $this->description = $data['description'] ?? '';
-        $this->type = $data['type'] ?? '' ;
+        $this->folderPath = $folderPath;
+        $this->payload = $data;
     }
 
     /**
@@ -22,7 +22,7 @@ class Composer
      */
     public function getName()
     {
-        return $this->name;
+        return $this->payload['name'];
     }
 
     /**
@@ -30,7 +30,7 @@ class Composer
      */
     public function getDescription()
     {
-        return $this->description;
+        return $this->payload['description'];
     }
 
     /**
@@ -38,7 +38,46 @@ class Composer
      */
     public function getType()
     {
-        return $this->type;
+        return $this->payload['type'];
     }
 
+    public function getFolderPath(): ?string
+    {
+        return $this->folderPath;
+    }
+
+    public function psr4Contains(String $namespace) : bool
+    {
+        
+        foreach($this->payload['autoload'][PSR4::toString()] as $entry => $path)
+        {
+            if ($entry == $namespace) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function addPsr4Entry($namespacePrefix, $folderPath)
+    {
+        $this->payload['autoload'][PSR4::toString()][$namespacePrefix] = $folderPath;
+    }
+
+    public function getSrcPsr4Namespace() : string
+    {
+        foreach($this->payload['autoload'][PSR4::toString()] as $entry => $path)
+        {
+            if ($path === 'src/')
+            {
+                return $entry;
+            }
+        }
+        return null;
+    }
+
+    public function getPayload()
+    {
+        return $this->payload;
+    }
 }

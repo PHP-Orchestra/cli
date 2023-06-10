@@ -71,7 +71,7 @@ class Solution
         return [
             'name' => $this->getName(),
             'version' => $this->getVersion(),
-            'projects' => $this->getProjects()
+            'projects' => array_values($this->getProjects())
         ];
     }
 }

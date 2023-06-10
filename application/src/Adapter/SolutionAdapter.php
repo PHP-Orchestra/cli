@@ -28,6 +28,6 @@ class SolutionAdapter implements SolutionAdapterInterface
 
     public function save(Solution $solution): void
     {
-        file_put_contents($solution->getFullPath(), json_encode($solution->toArray(), JSON_PRETTY_PRINT));
+        file_put_contents($solution->getFullPath(), json_encode($solution->toArray(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
     }
 }
