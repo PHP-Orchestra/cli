@@ -41,7 +41,7 @@ class AddProjectToSolutionHandler implements AddProjectToSolutionHandlerInterfac
             
         }
         
-        foreach($this->projectScanner->scan($this->solution->getPath()) as $project) {
+        foreach($this->projectScanner->scan($this->projectWorkingDirectory) as $project) {
         $this->solution->addProject($project);
         }
 
